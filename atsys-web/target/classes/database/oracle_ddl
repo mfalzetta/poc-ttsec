@@ -1,0 +1,164 @@
+-- ================================================================
+-- Description: Script de criação do banco de dados.
+-- Target database: Oracle 11g
+-- Author: Alexandre Verri
+-- Date: 15/04/2014
+-- ================================================================
+
+CREATE USER SIXBELL_NEWS IDENTIFIED BY sixbell;
+GRANT CREATE SESSION TO SIXBELL_NEWS;
+GRANT UNLIMITED TABLESPACE TO SIXBELL_NEWS;
+GRANT CREATE TABLE TO SIXBELL_NEWS;
+
+-- ==============================
+-- Create table
+-- ==============================
+create table SIXBELL_NEWS.ID_GEN (
+  gen_key   VARCHAR2(20) not null,
+  gen_value NUMBER not null
+);
+
+-- Add comments to the columns
+comment on column SIXBELL_NEWS.ID_GEN.gen_key
+  is 'Nome do gerador de chaves primárias.';
+comment on column SIXBELL_NEWS.ID_GEN.gen_value
+  is 'Valor atual da próxima chave primária.';
+
+-- Create/Recreate primary, unique and foreign key constraints
+alter table SIXBELL_NEWS.ID_GEN
+  add constraint PK_GEN_KEY primary key (GEN_KEY)
+  using index;
+
+insert into SIXBELL_NEWS.ID_GEN (GEN_KEY, GEN_VALUE) values ('global_id', 1);
+
+-- ==============================
+-- Create table
+-- ==============================
+create table SIXBELL_NEWS.NEWS_TYPE (
+  id   NUMBER not null,
+  name VARCHAR2(128) not null
+);
+
+-- Add comments to the columns
+comment on column SIXBELL_NEWS.NEWS_TYPE.id
+  is 'O ID desta entidade.';
+comment on column SIXBELL_NEWS.NEWS_TYPE.name
+  is 'O nome do tipo de notícia.';
+
+-- Create/Recreate primary, unique and foreign key constraints
+alter table SIXBELL_NEWS.NEWS_TYPE
+  add constraint PK_NEWS_TYPE primary key (ID)
+  using index;
+
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (1, 'Brasil');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (2, 'Mundo');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (3, 'Carros');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (4, 'Tecnologia');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (5, 'Economia');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (6, 'Esporte');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (7, 'Negócios');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (8, 'Moda e Beleza');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (9, 'Internacional');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (10, 'Educação');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (11, 'Previsão do Tempo');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (12, 'Últimas Notícias');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (13, 'Ciências');
+insert into SIXBELL_NEWS.NEWS_TYPE (ID, NAME) values (14, 'Política');
+
+
+-- ==============================
+-- Create table
+-- ==============================
+create table SIXBELL_NEWS.NEWS_ORIGIN (
+  id          NUMBER not null,
+  url         VARCHAR2(512) not null,
+  type_id     NUMBER not null,
+  last_check  DATE,
+  last_update DATE,
+  enabled     NUMBER not null,
+  errors      NUMBER default 0 not null
+);
+
+-- Add comments to the columns
+comment on column SIXBELL_NEWS.NEWS_ORIGIN.id
+  is 'O ID desta entidade.';
+comment on column SIXBELL_NEWS.NEWS_ORIGIN.url
+  is 'A URL da fonte de notícias (URL RSS/Atom).';
+comment on column SIXBELL_NEWS.NEWS_ORIGIN.type_id
+  is 'ID da classe de notícias.';
+comment on column SIXBELL_NEWS.NEWS_ORIGIN.last_check
+  is 'Data de última verificação.';
+comment on column SIXBELL_NEWS.NEWS_ORIGIN.last_update
+  is 'Data da última coleta/atualização.';
+comment on column SIXBELL_NEWS.NEWS_ORIGIN.enabled
+  is 'Indica se a fonte de notícias está habilitada ou não.';
+comment on column SIXBELL_NEWS.NEWS_ORIGIN.errors
+  is 'Contador de erros.';
+
+-- Create/Recreate primary, unique and foreign key constraints
+alter table SIXBELL_NEWS.NEWS_ORIGIN
+  add constraint PK_SIXBELL_NEWS.NEWS_ORIGIN primary key (ID)
+  using index;
+alter table SIXBELL_NEWS.NEWS_ORIGIN
+  add constraint FK_NEWS_TYPE foreign key (TYPE_ID)
+  references NEWS_TYPE (ID);
+
+
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('1','http://esporte.uol.com.br/ultimas/index.xml','6',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('2','http://tecnologia.uol.com.br/ultnot/index.xml','4',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('3','http://rss.uol.com.br/feed/economia.xml','5',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('4','http://ultimosegundo.ig.com.br/brasil/p1237569155677.xml','1',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('5','http://www.inovacaotecnologica.com.br/boletim/rss.xml','4',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('6','http://colunas.epocanegocios.globo.com/ideiaseinovacao/feed/','7',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('8','http://colunas.epocanegocios.globo.com/conversasinteligentes/feed/','7',NULL,NULL,'0');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('10','http://noticias.r7.com/internacional/feed.xml','9',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('11','http://entretenimento.r7.com/moda-e-beleza/feed.xml','8',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('12','http://noticias.r7.com/economia/feed.xml','5',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('13','http://www.r7.com//data/rss/vestibularConcursos.xml','10',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('14','http://www.r7.com//data/rss/previsaoTempo.xml','11',NULL,NULL,'0');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('15','http://noticias.r7.com/brasil/feed.xml','1',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('16','http://www.estadao.com.br/rss/brasil.xml','1',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('17','http://www.estadao.com.br/rss/ultimas.xml','12',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('18','http://www.estadao.com.br/rss/ciencia.xml','13',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('19','http://www.estadao.com.br/rss/internacional.xml','9',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('20','http://www.estadao.com.br/rss/esportes.xml','6',NULL,NULL,'1');
+insert into news_origin (ID, URL, TYPE_ID, LAST_CHECK, LAST_UPDATE, ENABLED) values('21','http://www.estadao.com.br/rss/politica.xml','14',NULL,NULL,'1');
+
+
+-- ==============================
+-- Create table
+-- ==============================
+create table SIXBELL_NEWS.NEWS (
+  id        NUMBER not null,
+  title     VARCHAR2(512) not null,
+  title_md5 VARCHAR2(32) not null,
+  origin_id NUMBER not null,
+  pub_date  DATE not null,
+  col_date  DATE not null
+);
+
+-- Add comments to the columns
+comment on column SIXBELL_NEWS.NEWS.id
+  is 'O ID desta entidade.';
+comment on column SIXBELL_NEWS.NEWS.title
+  is 'A manchete da notícia.';
+comment on column SIXBELL_NEWS.NEWS.title_md5
+  is 'O MD5 do título da notícia.';
+comment on column SIXBELL_NEWS.NEWS.origin_id
+  is 'O ID da origem da notícia.';
+comment on column SIXBELL_NEWS.NEWS.pub_date
+  is 'A data de publicação da notícia.';
+comment on column SIXBELL_NEWS.NEWS.col_date
+  is 'A data em que a notícia foi coletada.';
+
+-- Create/Recreate primary, unique and foreign key constraints
+alter table SIXBELL_NEWS.NEWS
+  add constraint PK_NEWS primary key (ID)
+  using index;
+alter table SIXBELL_NEWS.NEWS
+  add constraint UK_TITLE_MD5 unique (TITLE_MD5)
+  using index;
+alter table SIXBELL_NEWS.NEWS
+  add constraint FK_NEWS_ORIGIN foreign key (ORIGIN_ID)
+  references NEWS_ORIGIN (ID);
+

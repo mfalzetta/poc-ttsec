@@ -1,0 +1,366 @@
+html {
+    height: 100%;
+    font-family: san-serif, tahoma, georgia, serif !important;
+}
+
+body {
+    min-height: 100%;
+    color: #1d1d1d;
+    padding: 10px;
+    /*background: url('/upsale/resources/templates/t2/img/background-green.jpg') fixed;*/
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /*background-size: cover;*/
+}
+
+h2 + hr {
+    margin-top: -1em;
+    margin-bottom: 2em;
+}
+
+h3 + hr {
+    margin-top: -1em;
+}
+
+hr {
+    opacity: 0.3;
+}
+
+video {
+    display: block;
+}
+
+.m-right {
+    margin-right: 10px !important;
+}
+
+.m-top {
+    margin-top: 10px;
+}
+
+.sw {
+    /* Sombra preta.*/
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8) !important;
+    /* Sombra branca. */
+    /*box-shadow: 0 5px 10px rgba(255, 255, 255, 0.7) !important;*/
+}
+
+.title-sh {
+    color: #161616;
+    text-shadow: rgba(255, 255, 255, 0.4) 0 1px 0;
+}
+
+.trans {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.ui-state-disabled {
+    opacity: 0.7 !important;
+}
+
+::selection {
+    /*background: #D14;*/
+    background: #96238F;
+    color: white;
+}
+
+::-moz-selection {
+    /*background: #D14; */
+    background: #96238F;
+    color: white;
+}
+
+/* Para o overlay do dialog. */
+.ui-widget-overlay {
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Para corrigir as bordas da tabela no Firefox. */
+td {
+    border-color: #d0e4de !important;
+}
+
+/* ============================ */
+/* Formatação para formulários. */
+/* ============================ */
+
+label {
+    font-weight: bold;
+}
+
+div.form, div.form > div {
+    position: relative;
+}
+
+div.form > label > *, div.form > div > label > * {
+    display: block;
+    margin-top: 3px;
+}
+
+script {
+    display: none !important;
+}
+
+div.form > *, div.form > div > * {
+    margin: 20px 20px 10px 0;
+    display: inline-block;
+    vertical-align: bottom !important;
+}
+
+/*div.form label {*/
+/*font-size: 0.8em !important;*/
+/*}*/
+
+/* ============================ */
+/* Formatação especial para o autocomplete. */
+/* ============================ */
+
+table.ui-autocomplete-items {
+    overflow: hidden !important;
+}
+
+/* Corrige o problema do submenu que desaparece no Firefox. */
+#menu-master.ui-menu-child {
+    z-index: 9000;
+    top: 30px !important;
+}
+
+.clr {
+    clear: both;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-size: 0;
+    line-height: 0px;
+}
+
+.ui-column-filter {
+    width: 80% !important
+}
+
+.ui-picklist-list {
+    background: white !important
+}
+
+.ui-widget {
+    font-family: inherit !important;
+    font-size: inherit !important;
+}
+
+.ui-datatable-odd {
+    background: none repeat scroll 0 0 #F2F5F9;
+}
+
+.ui-picklist .ui-picklist-list {
+    width: 300px !important;
+}
+
+.ui-state-error {
+    border: red 2px solid !important;
+    background: #ffcccc !important;
+    color: black !important;
+}
+
+.ui-autocomplete-table {
+    cursor: pointer;
+}
+
+.ui-autocomplete-table td {
+    border: none !important;
+}
+
+tr td.va-center {
+    vertical-align: middle !important;
+}
+
+tr td.va-top {
+    vertical-align: top !important;
+}
+
+.cell-sp {
+    padding: 4px !important;
+}
+
+.ha-center {
+    text-align: center
+}
+
+.ha-left {
+    text-align: left
+}
+
+.ha-right {
+    text-align: right
+}
+
+.w100 {
+    width: 100% !important;
+}
+
+a.username span {
+    color: antiquewhite !important;
+    font-style: italic;
+}
+
+.user-active {
+    color: green;
+    font-weight: bold;
+}
+
+.user-inactive {
+    color: red;
+    font-weight: bold;
+}
+
+.font-micro {
+    font-size: 0.6em !important;
+}
+
+.font-mini {
+    font-size: 0.7em !important;
+}
+
+.font-small {
+    font-size: 0.8em !important;
+}
+
+.font-medium {
+    font-size: 0.9em !important;
+}
+
+.font-big {
+    font-size: 1.1em !important;
+}
+
+.font-bigger {
+    font-size: 1.2em !important;
+}
+
+/* ========================================== */
+/* Formatação para tabelas com larguras de colunas automáticas. */
+/* ========================================== */
+
+.ui-datatable table, .ui-datatable-resizable table {
+    table-layout: auto !important;
+}
+
+.ui-datatable-scrollable table {
+    table-layout: fixed !important;
+}
+
+/* ============================ */
+/* Formatação especial para o menu. */
+/* ============================ */
+
+#menu-master.menu {
+    z-index: 1000;
+    width: 100%;
+    border: none;
+}
+
+/* Corrige o problema do submenu que desaparece no Firefox. */
+#menu-master.ui-menu-child {
+    z-index: 9000;
+    top: 30px !important;
+}
+
+#menu-master .ui-menu, #menu-master .ui-menu-child {
+    /* Para corrigir alguns temas.*/
+    float: none !important;
+    background: -webkit-gradient(linear, left top, left bottom, from(#343434), to(#1d1d1d));
+    background: -moz-linear-gradient(top, #343434, #1d1d1d);
+    /*-webkit-box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.8);*/
+    /*-moz-box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.8);*/
+}
+
+#menu-master .ui-menu-list, .ui-menuitem, #menu-master .ui-menuitem-hover {
+    border: none;
+}
+
+#menu-master li.ui-menuitem-active a.ui-state-hover {
+    background: transparent;
+}
+
+/* Efeito nos textos do menu. */
+#menu-master li.ui-menuitem-active a.ui-state-hover span {
+    background: transparent;
+    color: #ffffff !important;
+    text-shadow: 0 0 20px #ffffff, 2px 2px 10px #ffffff;
+}
+
+#menu-master .ui-menuitem-text, #menu-master a.ui-state-disabled span {
+    background: transparent;
+    color: #d6d6db;
+}
+
+#menu-master .ui-menu .ui-menuitem {
+    margin-left: 20px;
+}
+
+.ui-panel, .ui-dialog .ui-dialog-content {
+    background-color: #f5f5f5;
+}
+
+.ui-panel-titlebar {
+    background-color: #e5e5e5;
+}
+
+.digits {
+    text-align: right;
+}
+
+.ui-growl {
+    top: 120px;
+    z-index: 9999;
+}
+
+/* Para remover linhas e fundo do panelGrid. */
+.ui-panelgrid tr, .ui-panelgrid-cell {
+    border: none !important;
+    background: none !important;
+}
+
+/*.ui-panelgrid tr, .ui-panelgrid td{*/
+/*border:none !important;*/
+/*background: none !important;*/
+/*}*/
+
+/* Desabilita o estilo nos labels quando houver erros. */
+.ui-outputlabel.ui-state-error {
+    border: none !important;
+    background: none !important;
+}
+
+.c-margin-left {
+    margin-left: 20px;
+}
+
+.c-margin-right {
+    margin-right: 20px;
+}
+
+.c-margin-top {
+    margin-top: 20px;
+}
+
+.status-active {
+    font-weight: bold;
+    color: darkgreen !important;
+}
+
+.status-expired {
+    font-weight: bold;
+    color: orangered !important;
+}
+
+.status-blocked {
+    font-weight: bold;
+    color: red !important;
+}
+
+.captchaImg {
+    cursor: hand !important;
+    width: 200px;
+    height: 50px;
+}

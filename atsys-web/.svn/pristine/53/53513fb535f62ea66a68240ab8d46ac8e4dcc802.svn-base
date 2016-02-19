@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="id" />
+        <cc:attribute name="label" />
+        <cc:attribute name="value" />
+        <cc:attribute name="mask"  />
+        <cc:attribute name="required" default="false" />
+        <cc:attribute name="readonly" default="false" />
+        <cc:attribute name="render" default="true" />
+        <cc:attribute name="title" />
+        <cc:attribute name="size" />
+        <cc:attribute name="validator" />
+    </cc:interface>
+
+    <cc:implementation>
+
+        <h:outputLabel id="label" styleClass="label"
+                       for="#{cc.attrs.id}:#{cc.attrs.id}"
+                       rendered="#{cc.attrs.render}"
+                       value="#{cc.attrs.label}: #{cc.attrs.required ? '*' : ''}"
+                       />        
+
+        <br/>
+
+        <p:inputMask id="#{cc.attrs.id}"
+                     value="#{cc.attrs.value}"
+                     mask="#{cc.attrs.mask}"
+                     required="#{cc.attrs.required}"
+                     rendered="#{cc.attrs.render}"
+                     readonly="#{cc.attrs.readonly}"
+                     title="#{cc.attrs.title}"
+                     size="#{cc.attrs.size}"
+                     maxlength="#{cc.attrs.size}"
+                     requiredMessage="'#{cc.attrs.label}' é obrigatório!"
+                     />
+
+        <br/>
+
+        <h:message id="msg"
+                   showDetail="false"
+                   showSummary="true"
+                   errorClass="error"
+                   for="#{cc.attrs.id}:#{cc.attrs.id}"
+                   rendered="#{cc.attrs.render}"
+                   />
+
+    </cc:implementation>
+
+</html>

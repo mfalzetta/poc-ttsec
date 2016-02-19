@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://java.sun.com/jsf/composite/ezcomp">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">Nova conta</ui:define>
+
+        <ui:define name="body">
+
+            <p>Por favor preencha os dados do formulário abaixo.
+                Você receberá um e-mail de confirmação de cadastro após enviar este formulário. </p>
+
+            <!--<p:messages autoUpdate="true" globalOnly="true" showDetail="true"/>-->
+
+            <p:panel id="panel">
+
+                <p:panelGrid columns="3" columnClasses="ha-right">
+
+                    <p:outputLabel value="Nome:" for="name"/>
+                    <p:inputText id="name" value="#{accountRequestMB.name}"
+                                 requiredMessage="Valor necessário."
+                                 placeholder="O seu nome completo"
+                                 size="40" required="true">
+                        <!--<p:ajax event="blur" process="@this" update="@this"/>-->
+                    </p:inputText>
+                    <p:message for="name"/>
+
+                    <p:outputLabel value="Email:" for="email"/>
+                    <p:inputText id="email" value="#{accountRequestMB.email}"
+                                 placeholder="O seu endereço de e-mail"
+                                 size="40" validator="emailDns" required="true">
+                        <!--<p:ajax event="blur" process="@this" update="@this"/>-->
+                    </p:inputText>
+                    <p:message for="email"/>
+
+                    <p:outputLabel value="Usuário:" for="username"/>
+                    <p:inputText id="username" value="#{accountRequestMB.username}"
+                                 placeholder="Seu login no site"
+                                 required="true" size="20" validator="username">
+                        <!--<p:ajax event="blur" process="@this" update="@this"/>-->
+                    </p:inputText>
+                    <p:message for="username" showSummary="false"/>
+
+                    <p:outputLabel value="Senha:" for="pwd1"/>
+                    <p:password id="pwd1" value="#{accountRequestMB.password1}" required="true"
+                                placeholder="Sua senha do site" promptLabel="Sua senha"
+                                weakLabel="Senha fraca" goodLabel="Boa senha" strongLabel="Senha forte"
+                                feedback="true" inline="true" size="20" redisplay="true"/>
+                    <p:message for="pwd1"/>
+
+                    <p:outputLabel value="Senha:" for="pwd2"/>
+                    <p:password id="pwd2" value="#{accountRequestMB.password2}" required="true"
+                                placeholder="Confirmação da senha" size="20" redisplay="true"/>
+                    <p:message for="pwd2"/>
+
+
+                    <p:outputLabel value="Captcha:" for="captcha:text" rendered="#{configMB.copy.useCaptcha}"/>
+                    <a:captcha id="captcha" rendered="#{configMB.copy.useCaptcha}"/>
+                    <p:message for="captcha:text" rendered="#{configMB.copy.useCaptcha}"/>
+
+                </p:panelGrid>
+
+            </p:panel>
+
+            <p:commandButton value="Solicitar nova conta" ajax="false"
+                             actionListener="#{accountRequestMB.request}"
+                             styleClass="c-margin-top c-margin-right"/>
+
+            <p:menuButton value="Mais opções..." styleClass="c-margin-top">
+                <p:menuitem value="Fazer login" outcome="login"/>
+                <p:menuitem value="Recuperar acesso" outcome="restore-account"/>
+            </p:menuButton>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>

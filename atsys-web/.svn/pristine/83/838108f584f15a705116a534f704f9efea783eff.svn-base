@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<cc:interface>
+    <cc:attribute name="id"/>
+    <cc:attribute name="label"/>
+    <cc:attribute name="value"/>
+    <cc:attribute name="required" default="false"/>
+    <cc:attribute name="show" default="true"/>
+    <cc:attribute name="title"/>
+    <cc:attribute name="miniLabel" required="false"/>
+    <cc:attribute name="size"/>
+    <cc:attribute name="minLenght" default="6"/>
+    <cc:attribute name="maxLenght" default="10"/>
+</cc:interface>
+
+<cc:implementation>
+
+    <div class="field">
+
+        <h:panelGrid columns="1">
+            <p:message id="msg" for="passwd" showDetail="false" showSummary="true"/>
+        </h:panelGrid>
+
+        <h:outputLabel id="label" for="passwd" styleClass="label"
+                       title="#{cc.attrs.title}" value="#{cc.attrs.label}: #{cc.attrs.required ? '*' : ''}"/>
+
+        <div class="clear"></div>
+
+        <p:password id="passwd" feedback="true" styleClass="fieldElem" inline="true"
+                    value="#{cc.attrs.value}" required="#{cc.attrs.required}" size="#{cc.attrs.size}"
+                    minLength="#{cc.attrs.minLenght}" maxlength="#{cc.attrs.maxLenght}"
+                    weakLabel="Senha fraca" goodLabel="Senha boa" strongLabel="Senha forte"
+                    promptLabel="Medidor de segurança da password"
+                    requiredMessage="'#{cc.attrs.label}' é obrigatório!"/>
+
+        <div class="clear"></div>
+
+        <h:outputText value="#{cc.attrs.miniLabel}"
+                      rendered="#{not empty cc.attrs.miniLabel}"
+                      styleClass="fieldElem miniLabel"/>
+
+    </div>
+
+</cc:implementation>
+
+</html>

@@ -1,0 +1,39 @@
+2015-05-08 10:50:24,194 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-4) JBAS010418: Stopped Driver service with driver-name = ojdbc6-11.1.0.7.0.jar
+2015-05-08 10:50:24,236 DEBUG [org.wildfly.extension.undertow] (MSC service thread 1-1) Stopping console redirect for default-host
+2015-05-08 10:50:24,214 DEBUG [org.jboss.as.security] (MSC service thread 1-2) Stopping security domain service jboss-ejb-policy
+2015-05-08 10:50:24,247 DEBUG [org.wildfly.jberet] (MSC service thread 1-8) Removing batch environment; ModuleClassLoader for Module "deployment.ojdbc6-11.1.0.7.0.jar:main" from Service Module Loader
+2015-05-08 10:50:24,250 DEBUG [org.jboss.as.connector.subsystems.resourceadapters] (MSC service thread 1-7) Stopping ResourceAdaptersSubsystem Service
+2015-05-08 10:50:24,250 DEBUG [org.jboss.as.security] (MSC service thread 1-3) Stopping security domain service jboss-web-policy
+2015-05-08 10:50:24,252 DEBUG [org.jboss.as.security] (MSC service thread 1-5) Stopping security domain service other
+2015-05-08 10:50:24,277 DEBUG [org.jboss.as.ejb3.remote.EJBTransactionRecoveryService] (ServerService Thread Pool -- 52) Un-registered org.jboss.as.ejb3.remote.EJBTransactionRecoveryService$1@c10d4de from the transaction recovery manager
+2015-05-08 10:50:24,282 DEBUG [org.jboss.as.connector.deployment.registry] (MSC service thread 1-2) Stopping service service jboss.raregistry
+2015-05-08 10:50:24,283 DEBUG [org.jboss.as.mail.extension] (MSC service thread 1-4) JBAS015402: Removed mail session [java:jboss/mail/Default]
+2015-05-08 10:50:24,307 DEBUG [org.jboss.as.connector.logging] (MSC service thread 1-5) Stopping JCA WorkManager: 
+2015-05-08 10:50:24,307 DEBUG [org.jboss.as.connector.logging] (MSC service thread 1-5) Stopped JCA WorkManager: 
+2015-05-08 10:50:24,308 INFO  [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-5) JBAS010409: Unbound data source [java:jboss/datasources/ExampleDS]
+2015-05-08 10:50:24,309 DEBUG [org.jboss.tm.usertx.UserTransactionRegistry] (MSC service thread 1-1) org.jboss.tm.usertx.UserTransactionRegistry@186096d2 removeListener org.jboss.as.jpa.container.JPAUserTransactionListener@32986cd5
+2015-05-08 10:50:24,316 DEBUG [org.jboss.as.connector.subsystems.datasources] (MSC service thread 1-5) Removed JDBC Data-source [java:jboss/datasources/ExampleDS]
+2015-05-08 10:50:24,316 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-4) JBAS017532: Host default-host stopping
+2015-05-08 10:50:24,320 DEBUG [org.jboss.as.domain.management] (MSC service thread 1-3) Stopping 'ApplicationRealm' Security Realm Service
+2015-05-08 10:50:24,339 DEBUG [org.jboss.jca.core.connectionmanager.TxConnectionManager] (ServerService Thread Pool -- 52) java:jboss/datasources/ExampleDS: shutdown
+2015-05-08 10:50:24,341 DEBUG [org.jboss.jca.core.connectionmanager.pool.strategy.OnePool] (ServerService Thread Pool -- 52) ExampleDS: shutdown
+2015-05-08 10:50:24,363 DEBUG [org.jboss.as.connector.logging] (MSC service thread 1-1) stopped ManagementRepositoryService service jboss.management_repository
+2015-05-08 10:50:24,363 DEBUG [org.jboss.as.domain.management] (MSC service thread 1-6) Stopping 'ManagementRealm' Security Realm Service
+2015-05-08 10:50:24,376 DEBUG [org.jboss.jca.core.api.connectionmanager.ccm.CachedConnectionManager] (MSC service thread 1-5) stop: CachedConnectionManagerImpl@349d589d[debug=false error=false ignoreConnections=false transactionManager=org.jboss.jca.core.tx.jbossts.TransactionManagerDelegator@2813587c transactionSynchronizationRegistry=com.arjuna.ats.internal.jta.transaction.arjunacore.TransactionSynchronizationRegistryImple@5b352996 userTransactionRegistry=org.jboss.jca.core.tx.jbossts.UserTransactionRegistryImpl@496da349 currentObjects=null objectToConnectionManagerMap={} connectionStackTraces={}]
+2015-05-08 10:50:24,377 DEBUG [org.jboss.tm.usertx.UserTransactionRegistry] (MSC service thread 1-5) org.jboss.tm.usertx.UserTransactionRegistry@186096d2 removeListener org.jboss.jca.core.tx.jbossts.UserTransactionListenerImpl@1c11cb62
+2015-05-08 10:50:24,377 DEBUG [org.jboss.as.connector.logging] (MSC service thread 1-5) Stopped CcmService service jboss.cached-connection-manager
+2015-05-08 10:50:24,375 INFO  [org.jboss.as.connector.deployers.jdbc] (MSC service thread 1-3) JBAS010418: Stopped Driver service with driver-name = h2
+2015-05-08 10:50:24,388 DEBUG [org.jboss.as.connector.deployment.registry] (MSC service thread 1-3) Stopping service service jboss.jdbc-driver.registry
+2015-05-08 10:50:24,395 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-2) JBAS017521: Undertow HTTP listener default suspending
+2015-05-08 10:50:24,401 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-2) JBAS017520: Undertow HTTP listener default stopped, was bound to /127.0.0.1:8081
+2015-05-08 10:50:24,412 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-2) JBAS017506: Undertow 1.1.0.Final stopping
+2015-05-08 10:50:24,461 DEBUG [org.jboss.modules] (MSC service thread 1-8) Module org.jsoup:main defined by local module loader @763d9750 (finder: local module finder @5c0369c4 (roots: /OneDrive/mfalzetta/dev/projetos/sixbell/vivo-telefonica/ttsec/wildfly-8.2.0.Final/modules,/OneDrive/mfalzetta/dev/projetos/sixbell/vivo-telefonica/ttsec/wildfly-8.2.0.Final/modules/system/layers/base))
+2015-05-08 10:50:24,499 INFO  [org.hibernate.validator.internal.util.Version] (MSC service thread 1-8) HV000001: Hibernate Validator 5.1.3.Final
+2015-05-08 10:50:24,534 DEBUG [org.hibernate.validator.internal.engine.resolver.DefaultTraversableResolver] (MSC service thread 1-8) Found javax.persistence.Persistence on classpath containing 'getPersistenceUtil'. Assuming JPA 2 environment. Trying to instantiate JPA aware TraversableResolver
+2015-05-08 10:50:24,535 DEBUG [org.hibernate.validator.internal.engine.resolver.DefaultTraversableResolver] (MSC service thread 1-8) Instantiated JPA aware TraversableResolver of type org.hibernate.validator.internal.engine.resolver.JPATraversableResolver.
+2015-05-08 10:50:24,639 DEBUG [org.hibernate.validator.internal.xml.ValidationXmlParser] (MSC service thread 1-8) Trying to load META-INF/validation.xml for XML based Validator configuration.
+2015-05-08 10:50:24,647 DEBUG [org.hibernate.validator.internal.xml.ValidationXmlParser] (MSC service thread 1-8) No META-INF/validation.xml found. Using annotation based configuration only.
+2015-05-08 10:50:24,748 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-7) JBAS015877: Stopped deployment ojdbc6-11.1.0.7.0.jar (runtime-name: ojdbc6-11.1.0.7.0.jar) in 526ms
+2015-05-08 10:50:24,758 DEBUG [org.jboss.as.server] (MSC service thread 1-7) DeploymentMountProvider stopped
+2015-05-08 10:50:24,758 DEBUG [org.jboss.as.repository] (MSC service thread 1-4) ContentRepository stopped
+2015-05-08 10:50:24,760 INFO  [org.jboss.as] (MSC service thread 1-3) JBAS015950: WildFly 8.2.0.Final "Tweek" stopped in 511ms

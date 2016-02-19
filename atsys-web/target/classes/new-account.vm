@@ -1,0 +1,28 @@
+<html>
+<body>
+
+<h3>Prezado(a) $email.user.name,</h3>
+<h4>Processamos o pedido de abertura de conta no site upsale.com.br.</h4>
+
+<ul>
+    <li><b>Nome de usuário:</b> $email.user.username</li>
+    <li><b>Data da solicitação:</b> $dtf.print($email.created)</li>
+</ul>
+
+<p>Para ativar a sua conta, por favor clique no link abaixo:</p>
+
+<p><a href="http://upsale.com.br:8080/upsale/validate-account.jsf?username=$email.user.username&otp=$email.user.otp">Ativar minha conta</a></p>
+
+<p>Obrigado por utilizar nossos serviços.</p>
+Atenciosamente,
+
+<br/>
+Equipe UpSale
+
+<br/>
+<br/>
+
+<h5>Este é um email automático, por favor não o responda.</h5>
+
+</body>
+</html>

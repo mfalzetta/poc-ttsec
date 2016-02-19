@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="ATSys" uuid="4f0fa519-2bd1-4e8b-9f8d-ac71855c6b94">
+      <secret-storage>master_key</secret-storage>
+      <user-name>atsys</user-name>
+      <schema-pattern>*.ATSYS</schema-pattern>
+      <default-schemas>*.ATSYS *.SYS *.SYSTEM</default-schemas>
+    </data-source>
+  </component>
+</project>

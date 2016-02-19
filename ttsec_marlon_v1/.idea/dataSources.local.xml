@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="vivo_ttsec_dev [oracle]" uuid="f0e902d2-fb8e-4c3b-9fd5-3ecccd5786fa">
+      <secret-storage>memory</secret-storage>
+    </data-source>
+  </component>
+</project>

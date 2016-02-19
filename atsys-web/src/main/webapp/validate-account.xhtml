@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://java.sun.com/jsf/composite/ezcomp">
+
+<f:view contracts="basic">
+
+    <f:metadata>
+        <f:viewParam name="username" value="#{accountValidatorMB.username}" required="true"/>
+        <f:viewParam name="otp" value="#{accountValidatorMB.otp}" required="true"/>
+        <f:event type="preRenderView" listener="#{accountValidatorMB.preRender}"/>
+    </f:metadata>
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="head-title">Validação de conta</ui:define>
+        <ui:define name="title">Validação de conta</ui:define>
+
+        <ui:define name="body">
+
+            <p:outputPanel rendered="#{not empty accountValidatorMB.user}">
+                <p>Sua conta esta prestes a ser validada.
+                    Após clicar no botão <b>Validar conta</b>, você será direcionado para a página de logon.
+                </p>
+                <p:outputPanel rendered="#{accountValidatorMB.mustChangePassword}">
+                    <p>Por favor escolha uma nova senha para acesso ao site.</p>
+                </p:outputPanel>
+            </p:outputPanel>
+
+
+            <p:outputPanel rendered="#{empty accountValidatorMB.user}">
+                <p>Este link que você está tentando acessar não é mais válido.</p>
+
+                <p>Se você continua sem acesso a sua conta, pode solicitar novamente uma recuperação de conta em:
+                    <p:link value="recuperar acesso" outcome="restore-account.jsf"/>.
+                </p>
+            </p:outputPanel>
+
+            <p:messages id="msg" autoUpdate="false" globalOnly="true" showDetail="true"/>
+
+            <p:panel id="panel">
+
+                <p:panelGrid columns="2" columnClasses="ha-right">
+
+                    <p:outputLabel value="Usuário:" for="username"/>
+                    <p:inputText id="username" value="#{accountValidatorMB.username}"
+                                 placeholder="O seu login." readonly="true"
+                                 size="50" required="true" maxlength="50"/>
+
+                    <p:outputLabel value="Token:" for="tokenOtp"/>
+                    <p:inputText id="tokenOtp" value="#{accountValidatorMB.otp}"
+                                 placeholder="O token enviado para o seu e-mail." readonly="true"
+                                 size="50" required="true" maxlength="50"/>
+
+                    <p:outputLabel value="Senha:" for="pwd1" rendered="#{accountValidatorMB.mustChangePassword}"/>
+                    <p:password id="pwd1" value="#{accountValidatorMB.password1}" required="true"
+                                rendered="#{accountValidatorMB.mustChangePassword}"
+                                placeholder="Sua nova senha do site" promptLabel="Sua nova senha"
+                                weakLabel="Senha fraca" goodLabel="Boa senha" strongLabel="Senha forte"
+                                feedback="true" inline="true" size="20" redisplay="true"/>
+
+                    <p:outputLabel value="Senha:" for="pwd2" rendered="#{accountValidatorMB.mustChangePassword}"/>
+                    <p:password id="pwd2" value="#{accountValidatorMB.password2}" required="true"
+                                rendered="#{accountValidatorMB.mustChangePassword}"
+                                placeholder="Confirmação da senha" size="20" redisplay="true"/>
+
+                    <p:outputLabel value="Captcha:" for="captcha:text" rendered="#{config.useCaptcha}"/>
+                    <a:captcha id="captcha" rendered="#{config.useCaptcha}"/>
+
+                    <!--<p:outputLabel value="" rendered="#{config.useCaptcha}"/>-->
+                    <!--<p:captcha label="Captcha" rendered="#{config.useCaptcha}"/>-->
+
+                </p:panelGrid>
+
+            </p:panel>
+
+            <p:commandButton value="Validar conta" ajax="false"
+                             action="#{accountValidatorMB.validate}"
+                             disabled="#{empty accountValidatorMB.user}"
+                             styleClass="c-margin-top, c-margin-right"/>
+
+            <p:menuButton value="Mais opções..." styleClass="c-margin-top">
+                <p:menuitem value="Fazer login" outcome="login"/>
+                <p:menuitem value="Solicitar nova conta" outcome="new-account"/>
+                <p:menuitem value="Recuperar acesso" outcome="restore-account"/>
+            </p:menuButton>
+
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>

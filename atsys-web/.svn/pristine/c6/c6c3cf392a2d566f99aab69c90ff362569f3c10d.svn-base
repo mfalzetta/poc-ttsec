@@ -1,0 +1,167 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a="http://java.sun.com/jsf/composite/ezcomp"
+                template="/resources/templates/t2/template.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="sessionId" value="#{sessionMB.sessionId}" required="true"/>
+        <f:event type="preRenderView" listener="#{sessionMB.preRender}"/>
+    </f:metadata>
+
+    <ui:define name="title">Apresentação de sessão</ui:define>
+
+    <ui:define name="js">
+
+        <script type="text/javascript">
+            //<![CDATA[
+
+            //            var session = new Upsale.Session("#{sessionMB.sessionId}");
+            //            $(document).ready(function () {
+            //                session.init();
+            //            });
+
+            var chat = new SockJS('http://' + location.host + '/upsale/s/chat');
+
+            chat.onopen = function () {
+                console.log('Chat opened.');
+                chatMessage({type: "JOIN_CHAT", id: "#{sessionMB.sessionId}"});
+            };
+
+            chat.onmessage = function (msg) {
+                console.info('Received message: ' + msg.data);
+                var event = JSON.parse(msg.data);
+                switch (event.type) {
+                    case 'MSG_TO_ALL':
+                        processMessage(event.message);
+                        break;
+                    default:
+                        console.error('Unrecognized message', event);
+                }
+            };
+
+            var chatMessage = function (msg) {
+                var json = JSON.stringify(msg);
+                console.log('Sending message: ' + json);
+                chat.send(json);
+            };
+
+            var sendToPublic = function () {
+                var elem = $("#tabs\\:publicInput");
+                chatMessage({
+                    type: "MSG_TO_ALL",
+                    id: "#{sessionMB.sessionId}",
+                    message: {content: elem.val()}
+                });
+                elem.val("");
+            };
+
+            //            $(document).ready(function () {
+            //
+            //                $("#tabs\\:publicInput").keypress(function (e) {
+            //                    if (e.which == 13) {
+            //                        sendToPublic();
+            //                    }
+            //                });
+            //
+            //                $(window).keydown(function (event) {
+            //                    if (event.keyCode == 13) {
+            //                        event.preventDefault();
+            //                        return false;
+            //                    }
+            //                });
+            //
+            //            });
+
+            function processMessage(message) {
+                var dateTime = $.format.date(message.dateTime, 'HH:mm:ss');
+                var from = message.from;
+                var content = message.content;
+                var pubElem = $("#publicArea");
+                pubElem.append("<p><b>" + dateTime + "\t\t" + from + "</b>:\t\t" + content + "</p>");
+            }
+
+            //            $(function () {
+            //                $("#divTabs").tabs();
+            //                addTab("Todos");
+            //            });
+
+            //            function processMessage(message) {
+            //                var dateTime = $.format.date(message.dateTime, 'HH:mm:ss');
+            //                var from = message.from;
+            //                var content = message.content;
+            //                var pubElem = $("#panel_" + from);
+            //                pubElem.append("<p><b>" + dateTime + "\t\t" + from + "</b>:\t\t" + content + "</p>");
+            //            }
+
+            // Quantidade inicial.
+            var tabCounter = 1;
+
+            function addTab(tabName) {
+
+                tabCounter++;
+
+                var divTabs = $("#divTabs");
+                var ul = $("#ulTabs");
+                var contentTabs = $('#contentTabs');
+
+                var sampleContent = "<p>Sample content for the " + tabName + " tab.</p>";
+
+                /*** "Destroy" current tab widget temporarily. (...re-initialized later) ***/
+                divTabs.tabs("destroy");
+
+                /*** Add the new LI element for the tab, and point it to the content's id. ***/
+                ul.html(ul.html() + "<li><a href='#" + tabName + "'>" + tabName + "</a></li>");
+
+                /*** Add the content that the new tab points to. ***/
+                contentTabs.html(contentTabs.html() + "<div id='" + tabName + "'>" + sampleContent + "</div>");
+
+                /*** Re-initialize the tab widget, and make the new tab the "active" one. ***/
+                divTabs.tabs({active: (tabCounter - 1)});
+            }
+
+            //]]>
+        </script>
+    </ui:define>
+
+    <ui:define name="body">
+
+        <a:videoScripts/>
+
+        <p:button value="Iniciar" onclick="session.startPublisher(); return false;"/>
+        <p:button value="Pausar" onclick="session.pausePublisher(); return false;"/>
+        <p:button value="Continuar" onclick="session.resumePublisher(); return false;"/>
+        <p:button value="Parar" onclick="session.stop(); return false;"/>
+
+        <br/>
+        <br/>
+
+        <!--<video id="video" width="440px" height="330px"-->
+        <!--poster="../resources/images/webrtc.png"-->
+        <!--autoplay=""/>-->
+
+        <div id="container">
+            <div id="video"></div>
+        </div>
+
+        <p:tabView id="tabs">
+            <p:tab id="public" title="Todos">
+                <div id="publicArea" style="padding: 5px; overflow-y: scroll; width: 100%; height: 200px; background-color: #f8fbf4"></div>
+                <br/>
+                <p:inputText id="publicInput" placeholder="Sua mensagem" size="60" style="width: 500px;" value=""/>
+                <p:commandButton type="button" value="Enviar" onclick="sendToPublic(); return false;"/>
+            </p:tab>
+        </p:tabView>
+
+        <!--<div id="divTabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all ui-hidden-container ui-tabs-top" data-widget="widget_tabs">-->
+        <!--<ul id="ulTabs" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist"></ul>-->
+        <!--<div id="contentTabs" class="ui-tabs-panels"></div>-->
+        <!--</div>-->
+        <!--<br/>-->
+        <!--<label for="txtTabName">New Tab Name:</label>-->
+        <!--<input type="text" id="txtTabName"/>-->
+        <!--<button onclick="addTab($('#txtTabName').val()); return false;">Create Tab</button>-->
+
+    </ui:define>
+
+</ui:composition>

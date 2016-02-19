@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2440707876">
+    <data-source source="LOCAL" name="vivo_ttsec_dev [oracle]" uuid="f0e902d2-fb8e-4c3b-9fd5-3ecccd5786fa">
+      <driver-ref>oracle</driver-ref>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//192.168.5.31:1522/dev</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>

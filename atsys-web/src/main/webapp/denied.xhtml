@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">Acesso Negado</ui:define>
+
+        <ui:define name="body">
+
+            <h3>Desculpe, mas você precisa de permissão para acessar a página</h3>
+
+            <ul>
+                <li> Se você acredita que necessita de acesso à URL solicitada, por favor entre em contato com o
+                    administrador do sistema no e-mail webmaster@upsale.com.br.
+                </li>
+                <li>Informe o seu nome de usuário (<b>#{request.remoteUser}</b>) e a URL da página que
+                    estava tendando acessar.
+                </li>
+            </ul>
+
+            <h:graphicImage value="/resources/images/access-denied.png" style="display: block;"/>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>
+

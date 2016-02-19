@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:t="http://xmlns.jcp.org/jsf/passthrough"
+      data-ng-app="app">
+
+    <h:head>
+
+        <!-- Definição do tipo de conteúdo das páginas. -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+        <!-- Nome da aplicação. -->
+        <title>
+            <ui:insert name="head-title">
+                <ui:insert name="title">Upsale</ui:insert>
+            </ui:insert>
+        </title>
+
+        <!-- Favicon da aplicação. -->
+        <!--<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/icons/medal.png"/>-->
+
+        <!-- Stylesheet da aplicação. -->
+        <h:outputStylesheet name="css/system.css"/>
+
+        <!-- CSS adicional, customizável por página. -->
+        <ui:insert name="css"/>
+
+        <h:outputScript library="js" name="jquery.mask.min.js"/>
+
+        <!-- JS adicional, customizável por página. -->
+        <ui:insert name="js"/>
+
+    </h:head>
+
+    <h:body t:ng-controller="AppCtrl">
+
+        <ui:debug hotkey="x"/>
+
+        <a name="top"/>
+
+        <h:form id="f" prependId="false">
+
+            <!-- ============================================-->
+            <!-- Growl para notificação de mensagens.                                              -->
+            <!-- ============================================-->
+
+            <p:growl id="g" autoUpdate="true" globalOnly="true"
+                     showDetail="true" showSummary="false" life="5000"/>
+
+            <div>
+
+                <!-- ============================================-->
+                <!-- Barra de menus principal.                                                                   -->
+                <!-- ============================================-->
+
+                <div id="menu-master" class="menu">
+
+                    <p:menubar id="menu" autoDisplay="true" rendered="#{not empty securityService.loggedUser}">
+
+                        <p:submenu label="Administração">
+                            <p:menuitem value="Configurações" url="/secured/admin/config.jsf"/>
+                            <p:menuitem value="Usuários" url="/secured/admin/users.jsf"/>
+                            <p:menuitem value="Sobre o sistema" url="/about.jsf"/>
+                        </p:submenu>
+
+                        <p:menuitem value="Emails" url="/secured/emails.jsf"/>
+
+                        <p:menuitem value="Contato" url="/contact.jsf"/>
+
+                        <!-- Inclusão de novos itens de menu (customizável por página). -->
+                        <ui:insert name="menu"/>
+
+                        <!-- URL de logout da aplicação. -->
+                        <p:menuitem value="Logout"  url="/logout"
+                                    rendered="#{not empty request.remoteUser}"/>
+
+                        <!-- Nome do usuário logado (apenas leitura). -->
+                        <p:menuitem value="Usuário: #{request.remoteUser}"
+                                    rendered="#{not empty request.remoteUser}" styleClass="username"/>
+
+                        <!-- Indicador de status de requisições ajax. -->
+                        <p:menuitem>
+                            <h:graphicImage id="ajaxImg" library="icons" name="indicator-bar.gif"
+                                            style="display: none; margin-top: 10px"/>
+                        </p:menuitem>
+
+                    </p:menubar>
+
+                </div>
+
+                <div>
+                    <h2>
+                        <!-- Título da página. -->
+                        <ui:insert name="title"/>
+                    </h2>
+                    <hr/>
+                    <!-- Corpo da página. -->
+                    <ui:insert name="body"/>
+                </div>
+
+            </div>
+
+            <!-- Diálogos opcionais.  -->
+            <ui:insert name="dialogs"/>
+
+            <p:sticky target="menu"/>
+
+            <!-- Indicador de status de requisições ajax. -->
+            <p:ajaxStatus onstart="$('#ajaxImg').show()"
+                          onerror="$('#ajaxImg').hide()"
+                          onsuccess="$('#ajaxImg').hide()"/>
+
+        </h:form>
+
+    </h:body>
+
+</html>

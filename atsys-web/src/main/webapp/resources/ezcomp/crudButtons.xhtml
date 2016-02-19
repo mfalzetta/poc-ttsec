@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+<cc:interface>
+    <cc:attribute name="crudAction" type="com.sixlabs.atsys.web.jsf.model.CrudAction"/>
+    <cc:attribute name="updateOnCreate"/>
+    <cc:attribute name="updateOnSave"/>
+    <cc:attribute name="updateOnCancel"/>
+    <cc:attribute name="updateOnRemove"/>
+    <cc:attribute name="saveDisabled" default="false"/>
+    <cc:attribute name="removeDisabled" default="false"/>
+    <cc:attribute name="onRemoveUpdate"/>
+    <cc:attribute name="saveProcess"/>
+    <cc:attribute name="renderNew" default="true"/>
+</cc:interface>
+
+<cc:implementation>
+
+    <!-- Botões de CRUD. -->
+
+    <h:panelGroup layout="block" id="crud">
+
+        <p:commandButton value="Novo" action="#{cc.attrs.crudAction.createAction}"
+                         title="Inicia um novo cadastro." rendered="#{cc.attrs.renderNew}"
+                         process="@this" update="crud #{cc.attrs.updateOnCreate}" styleClass="c-margin-right">
+            <p:resetInput target=":f"/>
+        </p:commandButton>
+
+        <p:commandButton value="Salvar" action="#{cc.attrs.crudAction.saveAction}"
+                         process="@this #{cc.attrs.saveProcess}" update="crud #{cc.attrs.updateOnSave}"
+                         title="Salva os dados em edição." styleClass="c-margin-right"
+                         disabled="#{cc.attrs.crudAction.mode.read or cc.attrs.saveDisabled}" partialSubmit="true"/>
+
+        <p:commandButton value="Cancelar" action="#{cc.attrs.crudAction.cancelAction}"
+                         process="@this" update="crud #{cc.attrs.updateOnCancel}"
+                         title="Cancela esta ação." styleClass="c-margin-right"
+                         disabled="#{cc.attrs.crudAction.mode.read}">
+            <p:resetInput target=":f"/>
+        </p:commandButton>
+
+        <p:commandButton value="Remover" type="button" onclick="PF('cfm').show()"
+                         disabled="#{cc.attrs.crudAction.mode.readOrInsert or cc.attrs.removeDisabled}"
+                         styleClass="c-margin-right"/>
+
+    </h:panelGroup>
+
+    <!-- ======================================== -->
+    <!-- Painél de confirmação de remoção.                                          -->
+    <!-- ======================================== -->
+
+    <p:dialog id="cfm" widgetVar="cfm" header="Confirmação" modal="true" appendTo="@form">
+
+        <p>Tem certeza de que deseja remover?</p>
+
+        <f:facet name="footer">
+
+            <p:commandButton value="Cancelar" action="#{cc.attrs.crudAction.cancelAction}"
+                             process="@this" update="crud #{cc.attrs.updateOnCancel}"
+                             partialSubmit="true" immediate="true"
+                             oncomplete="PF('cfm').hide()"/>
+
+            <p:commandButton value="Remover" action="#{cc.attrs.crudAction.removeAction}"
+                             process="@this" update="crud, #{cc.attrs.updateOnRemove}"
+                             partialSubmit="true" immediate="true" styleClass="c-margin-left"
+                             oncomplete="PF('cfm').hide()"/>
+        </f:facet>
+
+    </p:dialog>
+
+</cc:implementation>
+
+</html>

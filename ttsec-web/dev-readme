@@ -1,0 +1,20 @@
+1. JSF Beans (Camada Web)
+    O JBoss nao esta respeitando as anotacoes do CDI para JSF. Esse projeto contempla entao as anotacoes especificas para o JSF.
+    Anotacoes JSF:
+        @ManagedBean
+        @ViewScoped
+    Anotacoes CDI:
+        @Named
+        @ViewScoped
+
+2.  Primefaces
+    Process:
+        Página para ManagedBean
+    Update:
+        ManagedBean para Página
+
+Intellij Idea
+    1. Acesso a base de dados.
+        a. Criar o datasource.
+        b. Criar o persistence e associar ao datasource.
+        c. A partir do persistence criar a entity.

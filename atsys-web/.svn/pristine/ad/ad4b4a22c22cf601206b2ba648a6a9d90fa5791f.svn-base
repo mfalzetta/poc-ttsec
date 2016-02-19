@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pou="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="id" />
+        <cc:attribute name="label" required="true" />
+        <cc:attribute name="value" required="true" />
+        <cc:attribute name="required" default="false" />
+        <cc:attribute name="readonly" default="false" />
+        <cc:attribute name="show" default="true"  />
+        <cc:attribute name="title" required="false" />
+        <cc:attribute name="miniLabel"  required="false"/>
+        <cc:attribute name="rows" default="5" />
+        <cc:attribute name="cols" default="40" />
+        <cc:attribute name="validatorId" required="false" />
+        <cc:attribute name="maxChars" default="100" />
+        <cc:valueHolder name="input" />
+    </cc:interface>
+
+    <cc:implementation>
+
+        <h:panelGrid id="conteudo" columns="1" rendered="#{cc.attrs.show}">
+
+            <pou:message id="msg"
+                       showDetail="false"
+                       showSummary="true"
+                       for="input"
+                       rendered="#{cc.attrs.show and not cc.attrs.readonly}"
+                       />
+
+            <h:outputLabel id="label" styleClass="label"
+                           for="input"
+                           title="#{cc.attrs.title}"
+                           rendered="#{cc.attrs.show}"
+                           value="#{cc.attrs.label}: #{cc.attrs.required ? '*' : ''}"
+                           />
+
+            <pou:inputTextarea id="input"
+                             value="#{cc.attrs.value}"
+                             label="#{cc.attrs.label}"
+                             required="#{cc.attrs.required}"
+                             rendered="#{cc.attrs.show}"
+                             readonly="#{cc.attrs.readonly}"
+                             rows="#{cc.attrs.rows}"
+                             cols="#{cc.attrs.cols}"
+                             requiredMessage="#{cc.attrs.label} é obrigatório."
+                             >
+                <f:validator validatorId="#{cc.attrs.validatorId}" disabled="#{empty cc.attrs.validatorId}" />
+            </pou:inputTextarea>
+
+            <!--h:panelGroup layout="block">
+                <h:panelGroup layout="block" id="barbox" styleClass="barbox">
+                    <h:panelGroup layout="block" id="bar" styleClass="bar"/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" id="count" styleClass="count" />
+            </h:panelGroup-->
+
+            <h:outputText value="#{cc.attrs.miniLabel}"
+                          rendered="#{not empty cc.attrs.miniLabel and cc.attrs.show}"
+                          styleClass="miniLabel" />
+
+        </h:panelGrid>
+
+    </cc:implementation>
+
+</html>

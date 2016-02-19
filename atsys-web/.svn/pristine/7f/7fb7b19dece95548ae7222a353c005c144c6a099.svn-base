@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="ATSys" uuid="4f0fa519-2bd1-4e8b-9f8d-ac71855c6b94">
+    <database-info product="Oracle" version="Oracle Database 10g Enterprise Edition Release 10.2.0.4.0 - Production&#xa;With the Partitioning, Data Mining and Real Application Testing options" jdbc-version="11.2" driver-name="Oracle JDBC driver" driver-version="11.2.0.3.0">
+      <extra-name-characters>$#</extra-name-characters>
+      <identifier-quote-string>&quot;</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact"/>
+    <schema name="ATSYS" catalog=""/>
+    <table name="CATEGORY" schema="ATSYS" catalog="" type="TABLE">
+      <column name="ID" sqlType="NUMBER" precision="38" scale="0" nullable="false" jdbcType="3"/>
+      <column name="DESCRIPTION" sqlType="VARCHAR2" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PK_CATEGORY" columns="ID"/>
+      <exported-key name="FK_CATEGORY_ID" table="COMPLAINT" schema="ATSYS" catalog="" columns="CATEGORY_ID"/>
+    </table>
+    <table name="COMPLAINT" schema="ATSYS" catalog="" type="TABLE">
+      <column name="ID" sqlType="VARCHAR2" precision="36" scale="0" nullable="false" jdbcType="12"/>
+      <column name="CREATED" sqlType="DATE" precision="7" scale="0" nullable="false" jdbcType="93"/>
+      <column name="UPDATED" sqlType="DATE" precision="7" scale="0" nullable="false" jdbcType="93"/>
+      <column name="STATUS_ID" sqlType="NUMBER" precision="38" scale="0" nullable="false" jdbcType="3"/>
+      <column name="TYPE_ID" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1"/>
+      <column name="CATEGORY_ID" sqlType="NUMBER" precision="38" scale="0" nullable="true" jdbcType="3"/>
+      <column name="CLAIMANT_NAME" sqlType="VARCHAR2" precision="80" scale="0" nullable="true" jdbcType="12"/>
+      <column name="CLAIMANT_PHONE" sqlType="VARCHAR2" precision="40" scale="0" nullable="true" jdbcType="12"/>
+      <column name="CLAIMANT_EMAIL" sqlType="VARCHAR2" precision="80" scale="0" nullable="true" jdbcType="12"/>
+      <column name="COMPLAINED_IP" sqlType="VARCHAR2" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="EMAIL_ID" sqlType="VARCHAR2" precision="36" scale="0" nullable="true" jdbcType="12"/>
+      <column name="TEXT" sqlType="CLOB" precision="4000" scale="0" nullable="true" jdbcType="2005"/>
+      <primary-key name="PK_COMPLAINT" columns="ID"/>
+      <foreign-key name="FK_CATEGORY_ID" columns="CATEGORY_ID" ref-table="CATEGORY" ref-schema="ATSYS" ref-catalog="" ref-columns="ID" update-rule="0" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK_STATUS_ID" columns="STATUS_ID" ref-table="COMPLAINT_STATUS" ref-schema="ATSYS" ref-catalog="" ref-columns="ID" update-rule="0" delete-rule="1" deferrability="2"/>
+      <exported-key name="FK_COMPLAINT" table="TICKET" schema="ATSYS" catalog="" columns="COMPLAINT_ID"/>
+    </table>
+    <table name="COMPLAINT_STATUS" schema="ATSYS" catalog="" type="TABLE">
+      <column name="ID" sqlType="NUMBER" precision="38" scale="0" nullable="false" jdbcType="3"/>
+      <column name="DESCRIPTION" sqlType="VARCHAR2" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PK_COMPLAINT_STATUS" columns="ID"/>
+      <exported-key name="FK_STATUS_ID" table="COMPLAINT" schema="ATSYS" catalog="" columns="STATUS_ID"/>
+    </table>
+    <table name="EMAIL" schema="ATSYS" catalog="" type="TABLE">
+      <column name="ID" sqlType="VARCHAR2" precision="36" scale="0" nullable="false" jdbcType="12"/>
+      <column name="RECEIVED" sqlType="DATE" precision="7" scale="0" nullable="false" jdbcType="93"/>
+      <column name="FROM_ADDRESS" sqlType="VARCHAR2" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="SUBJECT" sqlType="VARCHAR2" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="TEXT" sqlType="CLOB" precision="4000" scale="0" nullable="false" jdbcType="2005"/>
+      <column name="HASH" sqlType="CHAR" precision="68" scale="0" nullable="false" jdbcType="1"/>
+      <column name="LENGHT" sqlType="NUMBER" precision="0" scale="-127" nullable="false" jdbcType="3"/>
+      <primary-key name="PK_EMAIL" columns="ID"/>
+      <index name="UK_HASH" unique="true" columns="HASH"/>
+    </table>
+    <table name="TICKET" schema="ATSYS" catalog="" type="TABLE">
+      <column name="ID" sqlType="VARCHAR2" precision="36" scale="0" nullable="false" jdbcType="12"/>
+      <column name="CREATED" sqlType="DATE" precision="7" scale="0" nullable="false" jdbcType="93"/>
+      <column name="UPDATED" sqlType="DATE" precision="7" scale="0" nullable="false" jdbcType="93"/>
+      <column name="COMPLAINT_ID" sqlType="VARCHAR2" precision="36" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PK_TICKET" columns="ID"/>
+      <foreign-key name="FK_COMPLAINT" columns="COMPLAINT_ID" ref-table="COMPLAINT" ref-schema="ATSYS" ref-catalog="" ref-columns="ID" update-rule="0" delete-rule="1" deferrability="2"/>
+    </table>
+  </data-source>
+</component>

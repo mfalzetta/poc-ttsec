@@ -1,0 +1,24 @@
+<ui:component xmlns:cc="http://java.sun.com/jsf/composite"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="label" type="java.lang.String" default="Notas:"/>
+        <cc:attribute name="text" type="java.lang.String" required="true"/>
+        <cc:attribute name="required"  default="false"/>
+        <cc:attribute name="disabled"  default="false"/>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:outputLabel value="#{cc.attrs.label}" styleClass="w100">
+            <p:inputTextarea value="#{cc.attrs.text}" required="#{cc.attrs.required}" autoRezisable="false"
+                             counter="counter" counterTemplate="{0} caracteres restantes." styleClass="w100"
+                             cols="100" rows="4" maxlength="4000" disabled="#{cc.attrs.disabled}"/>
+            <h:outputText id="counter" styleClass="mini-info"/>
+        </p:outputLabel>
+
+    </cc:implementation>
+
+</ui:component>

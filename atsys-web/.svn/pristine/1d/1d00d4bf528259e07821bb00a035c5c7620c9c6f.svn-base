@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pou="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <cc:interface>
+        <cc:editableValueHolder name="select" />
+        <cc:attribute name="valueChangeListener" targets="select" required="false"/>
+        <cc:attribute name="id" />
+        <cc:attribute name="label" required="true" />
+        <cc:attribute name="value" />
+        <cc:attribute name="required" default="false" />
+        <cc:attribute name="disabled" default="false" />
+        <cc:attribute name="show" default="true" />
+        <cc:attribute name="title" />
+        <cc:attribute name="unselectedLabel" default="Não informado" />
+        <cc:attribute name="unselectedRendered" default="true" />
+        <cc:attribute name="converterId" required="false" />
+        <cc:attribute name="process" default="@this" />
+        <cc:attribute name="immediate" default="false" />
+        <cc:attribute name="ajax" default="false" />
+        <cc:attribute name="onstart" required="false"/>
+        <cc:attribute name="onerror" required="false"/>
+        <cc:attribute name="oncomplete" required="false"/>
+        <cc:attribute name="style" />
+        <cc:attribute name="update" default="@form" />
+    </cc:interface>
+
+    <cc:implementation>
+
+        <div class="field" >
+
+            <h:panelGrid columns="1" >
+                <pou:message id="msg" for="select"
+                           showDetail="false" showSummary="true"
+                           rendered="#{not cc.attrs.readonly}" />
+            </h:panelGrid>
+
+            <h:outputLabel id="label" for="select" styleClass="label"
+                           title="#{cc.attrs.title}" value="#{cc.attrs.label}: #{cc.attrs.required ? '*' : ''}" />
+
+            <div class="clear" />
+
+            <pou:selectOneMenu id="select" styleClass="fieldElem" style="#{cc.attrs.style}"
+                               value="#{cc.attrs.value}" effectDuration="50"
+                             label="#{cc.attrs.label}"
+                             required="#{cc.attrs.required}"
+                             disabled="#{cc.attrs.disabled}"
+                             immediate="#{cc.attrs.immediate}"
+                             requiredMessage="'#{cc.attrs.label}' é obrigatório!"
+                             >
+                <!--
+                <c:if test="#{cc.attrs.ajax}">
+                    <pou:ajax event="change" process="#{cc.attrs.process}" update="#{cc.attrs.update}"
+                            onstart="#{cc.attrs.onstart}" oncomplete="#{cc.attrs.oncomplete}" onerror="#{cc.attrs.onerror}" />
+                </c:if>
+                -->
+                
+                <c:if test="#{not empty cc.attrs.converterId}">
+                    <f:converter converterId="#{cc.attrs.converterId}"  />
+                </c:if>
+                
+                <c:if test="#{cc.attrs.unselectedRendered}">
+                    <f:selectItem itemLabel="#{cc.attrs.unselectedLabel}" itemValue="#{null}" />
+                </c:if>
+                
+                <cc:insertChildren />
+            </pou:selectOneMenu>
+
+        </div>
+
+    </cc:implementation>
+
+</html>

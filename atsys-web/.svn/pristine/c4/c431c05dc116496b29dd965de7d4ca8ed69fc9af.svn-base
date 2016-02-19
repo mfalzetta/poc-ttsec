@@ -1,0 +1,549 @@
+html {
+    height: 100%;
+    font-family: san-serif, tahoma, georgia, serif !important;
+    font-size: 0.8em;
+}
+
+hr {
+    opacity: 0.4;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    text-rendering: optimizeSpeed;
+    color: #1d1d1d;
+    /*box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);*/
+}
+
+label {
+    font-weight: bold;
+}
+
+video {
+    display: block;
+}
+
+a.title span, .title {
+    color: #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px #ff2d95, 0 0 25px #ff2d95, 0 0 30px #ff2d95, 0 0 40px #ff2d95, 0 0 50px #ff2d95, 0 0 80px #ff2d95;
+    letter-spacing: 5px;
+}
+
+h2, h3 {
+    text-shadow: rgba(255, 255, 255, 0.4) 0 1px 0;
+}
+
+h1, h2, h3 {
+    margin: 3px 0;
+    padding: 3px 0;
+}
+
+.m-right {
+    margin-right: 10px !important;
+}
+
+.m-top {
+    margin-top: 10px;
+}
+
+.sw {
+    /* Sombra preta.*/
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8) !important;
+    /* Sombra branca. */
+    /*box-shadow: 0 5px 10px rgba(255, 255, 255, 0.7) !important;*/
+}
+
+.title-sh {
+    color: #161616;
+    text-shadow: rgba(255, 255, 255, 0.4) 0 1px 0;
+}
+
+.trans {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.ui-state-disabled {
+    opacity: 0.7 !important;
+}
+
+::selection {
+    /*background: #D14;*/
+    background: #96238F;
+    color: white;
+}
+
+::-moz-selection {
+    /*background: #D14; */
+    background: #96238F;
+    color: white;
+}
+
+/* Para o overlay do dialog. */
+.ui-widget-overlay {
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Para corrigir as bordas da tabela no Firefox. */
+td {
+    border-color: #d0e4de !important;
+}
+
+/* ============================ */
+/* Formatação para formulários. */
+/* ============================ */
+
+label {
+    font-size: 0.9em !important;
+}
+
+div.form, div.form > div {
+    position: relative;
+}
+
+div.form > label > *, div.form > div > label > * {
+    display: block;
+    margin-top: 2px;
+}
+
+/* Importante para não aparecer os elementos 'script'. */
+script {
+    display: none !important;
+}
+
+div.form > *, div.form > div > * {
+    margin: 5px 10px 5px 0;
+    display: inline-block;
+    vertical-align: bottom !important;
+}
+
+/* ============================ */
+/* Componente Growl. */
+/* ============================ */
+
+.ui-growl-item {
+    background-color: #313e93 !important;
+    -webkit-border-radius: 3px !important;
+    -moz-border-radius: 3px !important;
+    color: #fff !important;
+    border: solid white 2px !important;
+}
+
+tr.ui-expanded-row-content > td {
+    background-color: #D4D7DF;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================ */
+/* Formatação especial para o autocomplete. */
+/* ============================ */
+
+table.ui-autocomplete-items {
+    overflow: hidden !important;
+}
+
+/* ============================ */
+/* Formatação especial para o menu. */
+/* ============================ */
+
+#menu-master.menu {
+    /* Fixa o menu na tela. */
+    position: fixed !important;
+    z-index: 1000;
+    width: 100%;
+    border: none;
+}
+
+/* Corrige o problema do submenu que desaparece no Firefox. */
+#menu-master.ui-menu-child {
+    z-index: 9000;
+    top: 30px !important;
+}
+
+#menu-master .ui-menu, #menu-master .ui-menu-child {
+    /* Para corrigir alguns temas.*/
+    float: none !important;
+    background: -webkit-gradient(linear, left top, left bottom, from(#343434), to(#1d1d1d));
+    background: -moz-linear-gradient(top, #343434, #1d1d1d);
+    /*-webkit-box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.8);*/
+    /*-moz-box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.8);*/
+    box-shadow: 0 2px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+#menu-master .ui-menu-list, .ui-menuitem, #menu-master .ui-menuitem-hover {
+    /*background: inherit;*/
+    border: none;
+}
+
+#menu-master li.ui-menuitem-active a.ui-state-hover {
+    background: transparent;
+}
+
+/* Efeito nos textos do menu. */
+#menu-master li.ui-menuitem-active a.ui-state-hover span {
+    background: transparent;
+    color: #ffffff !important;
+    text-shadow: 0 0 20px #ffffff, 2px 2px 10px #ffffff;
+}
+
+#menu-master .ui-menuitem-text, #menu-master a.ui-state-disabled span {
+    background: transparent;
+    color: #d6d6db;
+    /*text-shadow: 0 0 2px #d6d6db;*/
+}
+
+/* Remove as bordas redondas. */
+#menu-master div[role="menubar"] {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    border: none !important;
+}
+
+.ui-state-focus {
+    -moz-box-shadow: 0 0 20px darkorange !important;
+    -webkit-box-shadow: 0 0 20px darkorange !important;
+    box-shadow: 0 0 20px darkorange !important;
+}
+
+.main {
+    min-height: 100%;
+    padding-top: 25px
+}
+
+.clr {
+    clear: both;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-size: 0;
+    line-height: 0px;
+}
+
+.header, .content, .menu_nav, .fbg, .footer, form, ol, ol li, ul, .content .mainbar, .content .sidebar {
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    padding: 0 0 20px
+}
+
+.content_resize {
+    margin: 0 auto;
+    width: 99%;
+}
+
+.content .mainbar {
+    /*background-color: #fff;*/
+    padding: 30px 20px 0 20px;
+}
+
+.footer {
+}
+
+.footer_resize {
+    margin: 0 auto;
+    padding: 0;
+    width: 96%;
+}
+
+.footer p.lf {
+    margin: 0;
+    padding: 24px 0;
+    text-align: left;
+    width: auto;
+    line-height: 1.5em;
+    color: #929292;
+}
+
+.footer p.lf a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer p.lf a:hover {
+    text-decoration: underline;
+}
+
+.footer p.lf span {
+    float: right;
+}
+
+hr {
+    border-bottom-color: #D7DADC;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-top-color: #7FAAFF;
+    border-top-style: solid;
+    border-top-width: 1px;
+    clear: both;
+    display: block;
+    height: 0;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+hr.sep {
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-color: rgb(215, 218, 220);
+}
+
+.ui-column-filter {
+    width: 80% !important
+}
+
+.ui-picklist-list {
+    background: white !important
+}
+
+.ui-widget {
+    font-family: inherit !important;
+    font-size: inherit !important;
+}
+
+.ui-datatable-odd {
+    background: none repeat scroll 0 0 #F2F5F9;
+}
+
+.ui-picklist .ui-picklist-list {
+    width: 300px !important;
+}
+
+.ui-state-error {
+    border: red 2px solid !important;
+    background: #ffcccc !important;
+    color: black !important;
+}
+
+.ui-notificationbar {
+    background: #ff6666;
+    border: solid 2px #ff3333
+}
+
+.ui-autocomplete-table {
+    cursor: pointer;
+}
+
+.ui-autocomplete-table td {
+    border: none !important;
+}
+
+.ui-datatable tbody td {
+    padding: 5px 5px 5px 5px !important;
+}
+
+tr td {
+    vertical-align: top !important;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+tr td.va-center {
+    vertical-align: middle !important;
+}
+
+tr td.va-top {
+    vertical-align: top !important;
+}
+
+.cell-sp {
+    padding: 4px !important;
+}
+
+.ha-center {
+    text-align: center
+}
+
+.ha-left {
+    text-align: left
+}
+
+.ha-right {
+    text-align: right
+}
+
+ul li {
+    line-height: 1.4em
+}
+
+.w100 {
+    width: 100% !important;
+}
+
+.sec-table tr td {
+    padding: 2px !important;
+}
+
+.link-to-top {
+    display: block;
+    float: left;
+    clear: left;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.link {
+    /*text-decoration: none;*/
+    font-weight: bold;
+    text-shadow: 0 0 2px #aaa
+}
+
+.user-active {
+    color: green;
+    font-weight: bold;
+}
+
+.user-inactive {
+    color: red;
+    font-weight: bold;
+}
+
+.font-micro {
+    font-size: 0.6em !important;
+}
+
+.font-mini {
+    font-size: 0.7em !important;
+}
+
+.font-small {
+    font-size: 0.8em !important;
+}
+
+.font-medium {
+    font-size: 0.9em !important;
+}
+
+.font-big {
+    font-size: 1.1em !important;
+}
+
+.font-bigger {
+    font-size: 1.2em !important;
+}
+
+ul {
+    padding: 20px
+}
+
+table.control tr td {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.ui-datatable-odd-error {
+    background: #E8FF40;
+}
+
+.ui-datatable-even-error {
+    background: #ffbc9a;
+}
+
+.trade-bid {
+    background-color: #fffd9a !important;
+}
+
+.trade-ask {
+    background-color: #8ace8b !important;
+}
+
+.no-flicker {
+    -webkit-backface-visibility: hidden;
+}
+
+.nw {
+    white-space: nowrap;
+}
+
+.status-active, .payment-on-time {
+    font-weight: bold;
+    color: darkgreen !important;
+}
+
+.status-expired {
+    font-weight: bold;
+    color: orangered !important;
+}
+
+.status-blocked, .payment-overdue, .generic-error {
+    font-weight: bold;
+    color: red !important;
+}
+
+.status-new {
+    color: deeppink;
+    text-shadow: 0 0 10px hotpink;
+}
+
+.status-pendent {
+    color: darkred;
+    text-shadow: 0 0 10px red;
+}
+
+.status-waiting-att {
+    color: #ba6626;
+    text-shadow: 0 0 10px orange, 2px 2px 10px orange;
+}
+
+.status-ongoing {
+    color: darkblue;
+    text-shadow: 0 0 10px blue;
+}
+
+.status-completed {
+    color: darkgreen;
+    text-shadow: 0 0 10px green;
+}
+
+.status-canceled {
+    color: black;
+    text-shadow: 0 0 10px gray;
+}
+
+.mini-info {
+    color: #a7b4b0 !important;
+    font-size: 0.7em !important;
+}
+
+.attendance-master-status {
+    font-weight: bold;
+}
+
+.term-overdue {
+    color: #e41419;
+    font-weight: bold;
+}
+
+.term-ontime {
+    color: darkgreen;
+    font-weight: bold;
+}
+
+.message-unread {
+    font-weight: bold;
+}
+
+.message-read {
+}
+
+.criticality-low {
+    text-shadow: 0 0 10px green;
+    color: darkgreen;
+}
+
+.criticality-normal {
+    text-shadow: 0 0 10px orange;
+    color: darkorange;
+}
+
+.criticality-high {
+    text-shadow: 0 0 10px red;
+    color: darkred;
+}
+

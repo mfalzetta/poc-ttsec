@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://java.sun.com/jsf/composite/ezcomp">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">Página de login</ui:define>
+
+        <ui:define name="body">
+
+            <p>Por favor, informe os seus dados de acesso ao site.</p>
+
+            <p:focus for="taLogin:input"/>
+
+            <p:panel style="width: 430px">
+
+                <h:panelGroup id="panelLogin">
+
+                    <h:panelGrid columns="2">
+
+                        <h:panelGrid columns="1">
+
+                            <a:inputText id="taLogin" label="Login" required="true" size="30"
+                                         value="#{logonMB.username}"/>
+
+                            <a:inputSecret label="Password" required="false" size="30"
+                                           value="#{logonMB.password}" feedback="false"/>
+
+                        </h:panelGrid>
+
+                        <h:graphicImage name="img/login.png" style="height:100px; padding: 10px"/>
+
+                    </h:panelGrid>
+
+                </h:panelGroup>
+
+                <f:facet name="footer">
+
+                    <p:commandButton id="loginBtn" value="Entrar" styleClass="c-margin-right"
+                                     update="g, panelLogin" process="panelLogin, @this" ajax="false"
+                                     action="#{logonMB.logon}"/>
+
+                    <p:menuButton value="Mais opções...">
+                        <p:menuitem value="Restaurar acesso" outcome="restore-account.jsf"/>
+                        <p:menuitem value="Solicitar nova conta" outcome="new-account.jsf"/>
+                    </p:menuButton>
+
+                </f:facet>
+
+            </p:panel>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>

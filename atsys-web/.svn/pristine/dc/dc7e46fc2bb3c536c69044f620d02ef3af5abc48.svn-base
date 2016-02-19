@@ -1,0 +1,17 @@
+<html>
+<body>
+
+<h3>Prezado(a) $email.user.name,</h3>
+<h4>Este é um email de teste.</h4>
+
+Atenciosamente,
+<br/>
+Equipe UpSale
+
+<br/>
+<br/>
+
+<h5>Este é um email automático, por favor não o responda.</h5>
+
+</body>
+</html>

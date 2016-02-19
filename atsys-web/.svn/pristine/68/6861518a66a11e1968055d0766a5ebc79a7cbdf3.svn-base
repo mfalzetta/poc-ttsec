@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <cc:interface>
+        <cc:editableValueHolder name="input" />
+        <cc:attribute name="id" />
+        <cc:attribute name="label" required="true" />
+        <cc:attribute name="value" required="true" />
+        <cc:attribute name="required" default="false" />
+        <cc:attribute name="readonly" default="false" />
+        <cc:attribute name="show" default="true"  />
+        <cc:attribute name="style" />
+        <cc:attribute name="title" />
+        <cc:attribute name="miniLabel"  required="false"/>
+        <cc:attribute name="size" default="40" />
+        <cc:attribute name="validatorId" required="false" />
+        <cc:attribute name="converterId" required="false" />
+        <cc:attribute name="ajax" default="false" />
+        <cc:attribute name="styleClass" required="false" />
+        <cc:attribute name="numberPattern" required="false" />
+    </cc:interface>
+
+    <cc:implementation>
+
+        <div id="comp" class="field">
+
+            <h:panelGrid columns="1" >
+                <p:message id="m" for="input"
+                           showDetail="false"  showSummary="true"
+                           rendered="#{not cc.attrs.readonly}" />
+            </h:panelGrid>
+
+            <h:outputLabel id="label" styleClass="label"
+                           for="input" title="#{cc.attrs.title}"
+                           rendered="#{cc.attrs.show}"
+                           value="#{cc.attrs.label}: #{cc.attrs.required ? '*' : ''}" />
+
+            <div class="clear" />
+
+            <p:inputText id="input"
+                         value="#{cc.attrs.value}"
+                         label="#{cc.attrs.label}"
+                         required="#{cc.attrs.required}"
+                         readonly="#{cc.attrs.readonly}"
+                         size="#{cc.attrs.size}"
+                         maxlength="#{cc.attrs.size}"
+                         style="#{cc.attrs.style}"
+                         requiredMessage="'#{cc.attrs.label}' é obrigatório!"
+                         styleClass="fieldElem #{cc.attrs.styleClass}"  >
+
+                <f:validator validatorId="#{cc.attrs.validatorId}" disabled="#{empty cc.attrs.validatorId}" />
+                                
+                <c:if test="#{cc.attrs.ajax}">
+                    <p:ajax event="change" process="@this"  update="m"  />
+                </c:if>
+                
+                <c:if test="#{not empty cc.attrs.converterId}">
+                    <f:converter converterId="#{cc.attrs.converterId}"  />
+                </c:if>
+                
+                <c:if test="#{not empty cc.attrs.numberPattern}">
+                    <f:convertNumber pattern="#{cc.attrs.numberPattern}" />
+                </c:if>
+                
+                <cc:insertChildren  />
+                
+            </p:inputText>
+
+            <div class="field" />
+
+            <h:outputText  value="#{cc.attrs.miniLabel}" rendered="#{not empty cc.attrs.miniLabel}"
+                           styleClass="fieldElem miniLabel" />
+
+        </div>
+
+    </cc:implementation>
+
+</html>

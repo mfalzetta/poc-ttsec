@@ -1,0 +1,22 @@
+<ui:component xmlns:cc="http://java.sun.com/jsf/composite"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="update" required="true"/>
+        <cc:attribute name="actionListener" method-signature="void *(*)" required="true"/>
+        <cc:attribute name="title"/>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:commandLink partialSubmit="true" process="@this" update="#{cc.attrs.update}"
+                       actionListener="#{cc.attrs.actionListener}" immediate="true"
+                       title="#{cc.attrs.title}">
+            <h:graphicImage library="icons" name="remove-icon-16.png"/>
+        </p:commandLink>
+
+    </cc:implementation>
+
+</ui:component>

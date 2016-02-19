@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">Troca de senha</ui:define>
+
+        <ui:define name="body">
+
+            <p>Por favor, cadastre a sua nova senha.</p>
+
+            <p:panel>
+
+                <p:panelGrid id="panel" columns="2">
+
+                    <p:outputLabel value="Senha nova:" for="pwd1"/>
+                    <p:password id="pwd1" value="#{changePasswordMB.password1}" required="true"
+                                placeholder="Sua nova senha" promptLabel="Sua senha"
+                                weakLabel="Senha fraca" goodLabel="Boa senha" strongLabel="Senha forte"
+                                feedback="true" inline="true" size="20" redisplay="true"/>
+
+                    <p:outputLabel value="Senha (confirma):" for="pwd2"/>
+                    <p:password id="pwd2" value="#{changePasswordMB.password2}" required="true"
+                                placeholder="Confirmação da senha" size="20" redisplay="true"/>
+
+                </p:panelGrid>
+
+            </p:panel>
+
+            <br/>
+            <p:commandButton value="Salvar" action="#{changePasswordMB.save}"
+                             process="@form" update="@form"/>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>

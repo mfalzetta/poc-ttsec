@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://java.sun.com/jsf/composite/ezcomp">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">Sistema TTSec</ui:define>
+
+        <ui:define name="body">
+
+
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>
+
+

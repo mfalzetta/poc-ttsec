@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://java.sun.com/jsf/composite/ezcomp">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">Recuperar acesso</ui:define>
+
+        <ui:define name="body">
+
+            <p>Se você esqueceu os seus dados de acesso ao site (nome de usuário ou senha), podemos ajudar a recuperá-los.</p>
+
+            <p>Você precisa se lembrar ou do seu <b>nome de usuário cadastrado</b> ou do seu <b>endereço de e-mail cadastrado</b>.</p>
+
+            <p>Por favor preencha o formulário abaixo. Você receberá um e-mail com as instruções para recuperar os seus dados de acesso.</p>
+
+            <p:outputPanel id="panel">
+
+                <p:messages autoUpdate="false" globalOnly="true" showDetail="true"/>
+
+                <p:panel>
+
+                    <p:panelGrid columns="2" columnClasses="ha-right">
+
+                        <p:outputLabel value="Usuário ou e-mail:" for="userMail"/>
+                        <p:inputText id="userMail" value="#{accountRestoreMB.usernameOrEmail}"
+                                     placeholder="Seu nome de usuário ou e-mail"
+                                     size="40" required="true"/>
+
+                        <p:outputLabel value="Captcha:" for="captcha:text" rendered="#{configMB.copy.useCaptcha}"/>
+                        <a:captcha id="captcha" rendered="#{configMB.copy.useCaptcha}"/>
+
+                    </p:panelGrid>
+
+                </p:panel>
+
+            </p:outputPanel>
+
+            <p:commandButton value="Recuperar meus dados"
+                             actionListener="#{accountRestoreMB.restore}"
+                             process="panel, @this" update="panel"
+                             styleClass="c-margin-top c-margin-right"/>
+
+            <p:menuButton value="Mais opções..." styleClass="c-margin-top">
+                <p:menuitem value="Fazer login" outcome="login"/>
+                <p:menuitem value="Solicitar nova conta" outcome="new-account"/>
+            </p:menuButton>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>

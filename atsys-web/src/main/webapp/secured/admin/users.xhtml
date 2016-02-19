@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://java.sun.com/jsf/composite/ezcomp">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">Cadastro de Usuários</ui:define>
+
+        <ui:define name="body">
+
+            <p:dataTable id="table" value="#{userMB.list}" var="u" paginator="true"
+                         selection="#{userMB.entity}" rowKey="#{u.id}" rows="10" selectionMode="single"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{totalRecords} Registros,  Página {currentPage} de {totalPages}"
+                         rowsPerPageTemplate="10,25,50,100">
+
+                <p:ajax event="rowSelect" listener="#{userMB.onSelect}" partialSubmit="true"
+                        process=":f:table" update="@this :f:btn:crud :f:panel"/>
+
+                <p:column filterBy="#{u.name}" filterMatchMode="startsWith" sortBy="#{u.name}">
+                    <f:facet name="header">Nome</f:facet>
+                    <h:outputText value="#{u.name}"/>
+                </p:column>
+
+                <p:column filterBy="#{u.username}" filterMatchMode="startsWith" sortBy="#{u.username}">
+                    <f:facet name="header">Username</f:facet>
+                    <h:outputText value="#{u.username}"/>
+                </p:column>
+
+                <!--<p:column filterBy="#{u.email}" filterMatchMode="startsWith" sortBy="#{u.email}">-->
+                <!--<f:facet name="header">E-Mail</f:facet>-->
+                <!--<h:outputText value="#{u.email}"/>-->
+                <!--</p:column>-->
+
+
+                <p:column filterBy="#{u.enabled}" filterMatchMode="startsWith" sortBy="#{u.enabled}" style="width: 4em">
+                    <f:facet name="header">Conta</f:facet>
+                    <h:outputText value="#{u.statusText}" styleClass="#{u.statusCss}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Expira em</f:facet>
+                    <h:outputText value="#{u.daysToExpire} dias"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Tentativas</f:facet>
+                    <h:outputText value="#{u.invalidLogonAttempts}"/>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Últ. Logon</f:facet>
+                    <h:outputText value="#{u.lastLogon}" converter="localDateTime" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Papéis</f:facet>
+                    <h:outputText value="#{u.rolesStr}"/>
+                </p:column>
+
+            </p:dataTable>
+
+            <br/>
+
+            <a:crudButtons id="btn" crudAction="#{userMB}"
+                           renderNew="false"
+                           updateOnCreate=":f:panel :f:table"
+                           updateOnSave=":f:g :f:panel :f:table"
+                           updateOnCancel=":f:g :f:panel :f:table"
+                           updateOnRemove=":f:g :f:panel :f:table"
+                           saveProcess=":f:panel"/>
+
+            <br/>
+
+            <p:outputPanel id="panel">
+
+                <p:panel rendered="#{not empty userMB.entity}" header="#{userMB.mode.description}">
+
+                    <p:focus for="name" rendered="#{userMB.mode.insert}"/>
+
+                    <div class="form">
+
+                        <p:outputLabel value="Nome:" title="O nome do usuário.">
+                            <p:inputText id="name" value="#{userMB.entity.name}" required="true" size="50" placeholder="Nome do usuário"/>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Login:" title="O login do usuário no sistema.">
+                            <p:inputText id="login" value="#{userMB.entity.username}" readonly="true" size="20"/>
+                        </p:outputLabel>
+
+                        <!--<p:outputLabel value="Password:" title="A senha do usuário no sistema.">-->
+                        <!--<p:password id="passwd" value="#{userMB.clearPassword}" required="#{userMB.mode.insert}" size="20"/>-->
+                        <!--</p:outputLabel>-->
+
+                        <p:outputLabel value="E-mail:" title="O e-mail do usuário no sistema.">
+                            <p:inputText id="email" value="#{userMB.entity.email}" required="true" size="50"/>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Expira em:" title="A data de expiração da conta do usuário no sistema.">
+                            <p:calendar id="exp" value="#{userMB.entity.expire}" required="true" converter="localDateTime">
+                                <f:attribute name="pattern" value="dd/MM/yyyy HH:mm"/>
+                            </p:calendar>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Conta:" title="O status da conta do usuário.">
+                            <p:selectOneMenu id="enabled" value="#{userMB.entity.enabled}" effect="none"
+                                             styleClass="#{userMB.entity.statusCss}" style="width: 8em">
+                                <f:selectItem itemLabel="Ativa" itemValue="#{true}"/>
+                                <f:selectItem itemLabel="Bloqueada" itemValue="#{false}"/>
+                            </p:selectOneMenu>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Trocar senha?" title="Indica se o usuário precisa mudar a senha no próximo logon.">
+                            <p:selectOneMenu value="#{userMB.entity.mustChangePassword}" effect="none" style="width: 8em">
+                                <f:selectItem itemLabel="Sim" itemValue="#{true}"/>
+                                <f:selectItem itemLabel="Não" itemValue="#{false}"/>
+                            </p:selectOneMenu>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Tentativas:" title="Indica o número de tentativas inválidas de logon..">
+                            <p:inputText value="#{userMB.entity.invalidLogonAttempts}" disabled="true" style="width: 8em"/>
+                        </p:outputLabel>
+
+                        <br/>
+                        <a:phones id="phones" entity="#{userMB.entity}"/>
+
+                    </div>
+
+                    <h3>Papéis do usuário</h3>
+
+                    <p:pickList value="#{userMB.roles}" var="r" converter="role"
+                                itemLabel="#{r.description}" itemValue="#{r}">
+                        <f:facet name="sourceCaption">Disponíveis</f:facet>
+                        <f:facet name="targetCaption">Atribuídos</f:facet>
+                    </p:pickList>
+
+                    <div class="form">
+                        <a:createdUpdated entityTimed="#{userMB.entity}"/>
+                        <p:outputLabel value="Último Logon:">
+                            <p:inputText value="#{userMB.entity.lastLogon}" disabled="true" converter="localDateTime"  />
+                        </p:outputLabel>
+                    </div>
+
+                </p:panel>
+
+            </p:outputPanel>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>
+

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:t="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:a="http://java.sun.com/jsf/composite/ezcomp">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <f:metadata>
+            <f:viewParam name="sessionId" value="#{sessionMB.sessionId}" required="true"/>
+            <f:event type="preRenderView" listener="#{sessionMB.preRender}"/>
+        </f:metadata>
+
+        <ui:define name="title">Apresentação de sessão</ui:define>
+
+        <ui:define name="js">
+
+            <a:videoScripts/>
+
+            <script type="text/javascript">
+                //<![CDATA[
+
+                var app = angular.module('app', []);
+                var session = new Upsale.Session("#{sessionMB.sessionId}");
+
+                $(document).ready(function () {
+                    session.init();
+                });
+
+                app.controller('AppCtrl', function ($scope, $timeout, $http) {
+
+                    $scope.sessionStarted = false;
+
+                    $scope.question = '';
+
+                    $scope.questions = [
+                        {uuid: 1, dateTime: "12:34", from: "averri", question: "Quanto custa?"},
+                        {uuid: 2, dateTime: "12:40", from: "malvim", question: "Quantos metros quadrados?"},
+                        {uuid: 3, dateTime: "13:05", from: "pedro", question: "Poderia falar novamente sobre o banheiro?"}
+                    ];
+
+                    $scope.sendNewQuestion = function () {
+                        session.sendMessage({type: 'new-question', question: $scope.question});
+                        $scope.question = '';
+                    };
+
+                    session.onMessage(function (msg) {
+                        switch (msg.type) {
+                            case 'publisher':
+                                $scope.sessionStarted = true;
+                                break;
+                            case 'new-question':
+                                $scope.questions.push(msg);
+                                break;
+                            case 'stop':
+                                $scope.sessionStarted = false;
+                                break;
+                        }
+                        $scope.$digest();
+                    });
+
+                });
+
+                //]]>
+            </script>
+
+        </ui:define>
+
+        <ui:define name="body">
+
+            <p:button value="Iniciar" onclick="session.startPublisher(); return false;"/>
+            <p:button value="Pausar" onclick="session.pausePublisher(); return false;"/>
+            <p:button value="Continuar" onclick="session.resumePublisher(); return false;"/>
+            <p:button value="Parar" onclick="session.stop(); return false;" class="c-margin-right"/>
+
+            <h:graphicImage library="images" name="no-ar.jpg" style="display: none; height: 50px;"
+                            t:ng-show="sessionStarted"/>
+
+            <br/>
+            <br/>
+
+            <!--<video id="video" width="440px" height="330px"-->
+            <!--poster="../resources/images/webrtc.png"-->
+            <!--autoplay=""/>-->
+
+            <div id="container">
+                <div id="video"></div>
+            </div>
+
+            <p:panel id="questions" style="overflow-y: scroll; overflow-x: hidden; height: 300px">
+
+                <div ng-repeat-start="q in questions track by q.uuid">
+                    <b>{{q.dateTime | date: 'HH:mm:ss'}} {{q.from}}: </b>
+                    <span>{{q.question}}</span>
+                </div>
+
+                <!--<hr ng-repeat-end="" ng-hide="$last"/>-->
+                <hr ng-repeat-end="" ng-hide="$last"/>
+                <br/>
+                <br/>
+                <p:inputText value="" t:ng-model="question" t:ng-disabled="!sessionStarted"
+                             placeholder="Digite sua pergunta" size="50"/>
+
+                <p:commandButton type="button" t:ng-click="sendNewQuestion()"
+                                 t:ng-disabled="!sessionStarted || question == ''" value="Enviar"/>
+            </p:panel>
+
+            <p:draggable for="questions"/>
+            <p:resizable for="questions" handles="e,w,n,se,sw,ne,nw"/>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>

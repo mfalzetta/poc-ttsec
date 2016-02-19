@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <cc:interface>
+        <cc:attribute name="user" required="true"  />
+    </cc:interface>
+
+    <cc:implementation>
+        <h:graphicImage value="/resources/icons/online-16.png" rendered="#{appMB.isUserLogged(cc.attrs.user)}" style="float: left" />
+        <h:outputText  value="ONLINE" style="float: left; padding-left: 2px; color: #599E2C" rendered="#{appMB.isUserLogged(cc.attrs.user)}" />
+        <h:graphicImage value="/resources/icons/offline-16.png" rendered="#{not appMB.isUserLogged(cc.attrs.user)}" style="float: left" />
+        <h:outputText  value="OFFLINE" style="float: left; padding-left: 2px; color: #950303" rendered="#{not appMB.isUserLogged(cc.attrs.user)}" />
+    </cc:implementation>
+
+</html>

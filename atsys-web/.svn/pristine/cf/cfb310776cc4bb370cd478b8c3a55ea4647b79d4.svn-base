@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+<cc:interface>
+</cc:interface>
+
+<cc:implementation>
+
+    <p:link onclick="return false;">
+        <p:graphicImage id="img" url="/s/captcha/image.jpg" cache="false" styleClass="captchaImg"
+                        title="Clique para gerar um novo código."/>
+    </p:link>
+
+    <div class="clr"></div>
+
+    <p:inputText id="text" label="Código" styleClass="captchaText"
+                 title="Você deve inserir aqui o código da imagem acima."
+                 validator="captcha" required="true" maxlength="5"
+                 placeholder="Digite o código acima" style="width: 193px"
+                 onclick="this.select()"/>
+
+    <script type="text/javascript">
+        (function () {
+            $('.captchaImg').click(function () {
+                $(this).hide().attr('src', '/upsale/s/captcha/image.jpg?' + Math.floor(Math.random() * 100)).fadeIn();
+            });
+        })();
+    </script>
+
+</cc:implementation>
+
+</html>

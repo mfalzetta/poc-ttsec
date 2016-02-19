@@ -1,0 +1,28 @@
+<ui:component xmlns:cc="http://java.sun.com/jsf/composite"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="entityTimed" type="com.sixlabs.atsys.domain.EntityTimedID" required="true"/>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <p:outputLabel value="Criado em:">
+            <p:inputText id="created" value="#{cc.attrs.entityTimed.created}"
+                         disabled="true" converter="localDateTime">
+                <f:attribute name="pattern" value="dd/MM/yyyy HH:mm"/>
+            </p:inputText>
+        </p:outputLabel>
+
+        <p:outputLabel value="Atualizado em:">
+            <p:inputText id="updated" value="#{cc.attrs.entityTimed.updated}" disabled="true"
+                         converter="localDateTime">
+                <f:attribute name="pattern" value="dd/MM/yyyy HH:mm"/>
+            </p:inputText>
+        </p:outputLabel>
+
+    </cc:implementation>
+
+</ui:component>

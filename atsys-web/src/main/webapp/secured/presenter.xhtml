@@ -1,0 +1,27 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/resources/templates/t1/tp-secure.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="sessionId" value="#{sessionMB.sessionId}" required="true"/>
+        <f:event type="preRenderView" listener="#{sessionMB.preRender}"/>
+    </f:metadata>
+
+    <ui:define name="title">Apresentação de sessão</ui:define>
+
+    <ui:define name="js">
+        <script type="text/javascript">
+            //<![CDATA[
+
+            //]]>
+        </script>
+    </ui:define>
+
+    <ui:define name="body">
+
+        <!--<video src="rtmp://192.168.0.10:1935/live/livestream"  width="640px" height="360px" />-->
+
+    </ui:define>
+
+</ui:composition>

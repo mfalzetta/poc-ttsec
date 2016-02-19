@@ -1,0 +1,52 @@
+<ui:component xmlns:cc="http://java.sun.com/jsf/composite"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="entity" required="true"/>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <h:panelGroup id="comp" layout="block">
+            <p:commandButton value="Novo Telefone" actionListener="#{cc.attrs.entity.addEmptyPhone()}"
+                             title="Adiciona um novo telefone."
+                             partialSubmit="true" process="@parent" update="@parent" styleClass="font-micro"/>
+            <br/>
+            <h:dataTable value="#{cc.attrs.entity.phones}" var="ph" columnClasses="va-center"
+                         rendered="#{not empty cc.attrs.entity.phones}" style="margin-top: 10px">
+                <h:column>
+                    <f:facet name="header">Telefone</f:facet>
+                    <p:inputMask value="#{ph.number}" mask="(99) ?9999-9999" size="15" required="true">
+                        <p:ajax partialSubmit="true" process="@this" update="@this"/>
+                    </p:inputMask>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Tipo</f:facet>
+                    <p:selectOneMenu id="phones" value="#{ph.type}" converter="phoneType" effect="none">
+                        <!--<p:ajax partialSubmit="true" process="@parent" />-->
+                        <f:selectItems value="#{appMB.phoneTypes}" var="pt"
+                                       itemLabel="#{pt.description}" itemValue="#{pt}"/>
+                    </p:selectOneMenu>
+                </h:column>
+                <!--<h:column>-->
+                    <!--<f:facet name="header">Contato</f:facet>-->
+                    <!--<p:inputText value="#{ph.contact}" size="40">-->
+                        <!--<p:ajax partialSubmit="true" process="@this" update="@this"/>-->
+                    <!--</p:inputText>-->
+                <!--</h:column>-->
+                <h:column>
+                    <p:commandLink partialSubmit="true" process="@this" update=":f:#{cc.clientId}:comp"
+                                   title="Remove este telefone."
+                                   actionListener="#{cc.attrs.entity.remove(ph)}" immediate="true">
+                        <h:graphicImage library="icons" name="remove-icon-16.png"/>
+                    </p:commandLink>
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+
+    </cc:implementation>
+
+</ui:component>

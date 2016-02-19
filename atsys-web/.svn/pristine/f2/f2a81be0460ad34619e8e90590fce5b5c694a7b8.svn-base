@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:metadata>
+    <f:viewParam name="emailId" value="#{emailMB.email}" converter="email"/>
+</f:metadata>
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">E-mails recebidos</ui:define>
+
+        <ui:define name="body">
+
+            <p:dataTable value="#{emailMB.emails}" var="e">
+
+                <p:column headerText="Recebido de">
+                    <h:outputText value="#{e.fromAddress}" />
+                </p:column>
+
+                <p:column headerText="Assunto">
+                    <h:outputText value="#{e.subject}" />
+                </p:column>
+
+                <p:column headerText="Recebido em">
+                    <h:outputText value="#{e.received}" />
+                </p:column>
+
+            </p:dataTable>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>
+
+

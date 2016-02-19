@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml" >
+
+        <ui:define name="title">Configurações do sistema</ui:define>
+
+        <ui:define name="css">
+            <style type="text/css">
+
+                .f2_label {
+                    text-align: right;
+                    font-weight: bold;
+                }
+
+                .f2_input * {
+                    width: 400px !important;
+                }
+
+                table.f2 tr td {
+                    vertical-align: middle;
+                    padding: 5px;
+                }
+            </style>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <p>Esta página é restrita aos administradores.</p>
+
+            <p:panel>
+
+                <!--<h3>Configurações gerais</h3>-->
+                <!--<hr/>-->
+
+                <p:panelGrid columns="2" styleClass="f2" columnClasses="f2_label, f2_input">
+
+                    <h:outputLabel value="Diretório raiz:"/>
+                    <p:inputText value="#{configMB.copy.rootDirPath}"/>
+
+                    <h:outputLabel value="URL após logon:"/>
+                    <p:inputText value="#{configMB.copy.afterLogonURL}"/>
+
+                    <h:outputLabel value="URL de senha:"/>
+                    <p:inputText value="#{configMB.copy.passwordChangeURL}"/>
+
+                    <h:outputLabel value="E-mail usuário:"/>
+                    <p:inputText value="#{configMB.copy.emailUser}"/>
+
+                    <h:outputLabel value="E-mail senha:"/>
+                    <p:password value="#{configMB.copy.emailPassword}" redisplay="true"/>
+
+                    <h:outputLabel value="E-mail from:"/>
+                    <p:inputText value="#{configMB.copy.emailFrom}"/>
+
+                    <h:outputLabel value="E-mail extra:"/>
+                    <p:inputTextarea value="#{configMB.copy.emailExtra}" autoResize="true"
+                                     validator="properties"/>
+
+                    <h:outputLabel value="Captcha:"/>
+                    <h:selectOneMenu value="#{configMB.copy.useCaptcha}">
+                        <f:selectItem itemLabel="Ligado" itemValue="#{true}"/>
+                        <f:selectItem itemLabel="Desligado" itemValue="#{false}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Tema:"/>
+                    <h:selectOneMenu value="#{configMB.copy.theme}">
+                        <f:selectItem itemLabel="Aristo" itemValue="aristo"/>
+                        <f:selectItem itemLabel="Bootstrap" itemValue="bootstrap"/>
+                        <f:selectItem itemLabel="Cupertino" itemValue="cupertino"/>
+                        <f:selectItem itemLabel="Pepper-Grinder" itemValue="pepper-grinder"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Opentok:"/>
+                    <h:selectOneMenu value="#{configMB.copy.useOpentok}">
+                        <f:selectItem itemLabel="Sim" itemValue="#{true}"/>
+                        <f:selectItem itemLabel="Não" itemValue="#{false}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="Opentok API Key:"/>
+                    <p:inputText value="#{configMB.copy.opentokApiKey}"/>
+
+                    <h:outputLabel value="Opentok API Secret:"/>
+                    <p:inputText value="#{configMB.copy.opentokApiSecret}"/>
+
+                </p:panelGrid>
+
+            </p:panel>
+
+            <br/>
+            <p:commandButton value="Salvar" actionListener="#{configMB.save}" ajax="false"/>
+
+            <p:commandButton value="Enviar email de teste"
+                             actionListener="#{configMB.sendEmailTest}" process="@this" update=":f:g"/>
+
+            <p:commandButton value="Testar OpenTok"
+                             actionListener="#{configMB.testOpenTok}" process="@this" update=":f:g"/>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>

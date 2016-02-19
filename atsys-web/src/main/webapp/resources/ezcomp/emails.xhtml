@@ -1,0 +1,39 @@
+<ui:component xmlns:cc="http://java.sun.com/jsf/composite"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:a="http://java.sun.com/jsf/composite/ezcomp"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="entity" required="true"/>
+    </cc:interface>
+
+    <cc:implementation>
+
+        <h:panelGroup id="comp" layout="block">
+            <p:commandButton value="Novo E-mail" actionListener="#{cc.attrs.entity.addEmptyEmail()}"
+                             title="Adiciona um novo e-mail."
+                             partialSubmit="true" process="@this" update="@parent" styleClass="font-micro"/>
+            <br/>
+            <h:dataTable value="#{cc.attrs.entity.emails}" var="em" columnClasses="va-center va-center"
+                         rendered="#{not empty cc.attrs.entity.emails}">
+                <h:column>
+                    <f:facet name="header">E-mail</f:facet>
+                    <p:inputText value="#{em.address}" size="50" validator="emailDns">
+                        <p:ajax partialSubmit="true" process="@this" update="@this"/>
+                    </p:inputText>
+                </h:column>
+                <h:column>
+                    <p:commandLink partialSubmit="true" process="@this" update=":f:#{cc.clientId}:comp"
+                                   title="Remove este e-mail."
+                                   actionListener="#{coopMB.removeEmail(em)}" immediate="true">
+                        <h:graphicImage library="icons" name="remove-icon-16.png"/>
+                    </p:commandLink>
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+
+    </cc:implementation>
+
+</ui:component>

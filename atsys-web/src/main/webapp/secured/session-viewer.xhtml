@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://java.sun.com/jsf/composite/ezcomp">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <f:metadata>
+            <f:viewParam name="sessionId" value="#{sessionMB.sessionId}" required="true"/>
+            <f:event type="preRenderView" listener="#{sessionMB.preRender}"/>
+        </f:metadata>
+
+        <ui:define name="title">Visualização de sessão</ui:define>
+
+        <ui:define name="js">
+
+            <a:videoScripts/>
+
+            <script type="text/javascript">
+                //<![CDATA[
+
+                var app = angular.module('app', []);
+                var session = new Upsale.Session("#{sessionMB.sessionId}");
+
+                $(document).ready(function () {
+                    session.init();
+                });
+
+                app.controller('AppCtrl', function ($scope, $timeout, $http) {
+
+                    $scope.questions = [
+                        {id: 1, date: "12:34", from: "averri", question: "Quanto custa?"},
+                        {id: 2, date: "12:40", from: "malvim", question: "Quantos metros quadrados?"},
+                        {id: 3, date: "13:05", from: "pedro", question: "Poderia falar novamente sobre o banheiro?"}
+                    ];
+
+                });
+
+                //]]>
+            </script>
+        </ui:define>
+
+        <ui:define name="body">
+
+            <p:button value="Viewer" onclick="session.startViewer(); return false;"/>
+
+            <br/>
+            <br/>
+
+            <div id="container">
+                <div id="video"></div>
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>

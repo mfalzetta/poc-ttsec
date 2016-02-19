@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+        >
+
+<h:head>
+</h:head>
+
+<h:body>
+marlons
+    <a name="top"/>
+
+    <h:form id="f" prependId="false">
+
+        <!-- ============================================-->
+        <!-- Growl para notificação de mensagens.                                              -->
+        <!-- ============================================-->
+
+        <p:growl id="g" autoUpdate="true" globalOnly="true" showDetail="true"
+                 showSummary="false" life="4000"/>
+
+        <!-- ============================================-->
+        <!-- Corpo principal da página.                                                                   -->
+        <!-- ============================================-->
+
+        <p:outputPanel id="panel">
+
+            <p:commandButton value="Novo"
+                             action="#{dnsblMB.createAction}"
+                             process="@this"
+                             update="panel"/>
+
+            <p:commandButton value="Salvar"
+                             action="#{dnsblMB.saveAction}"
+                             process="panel"
+                             update="panel"
+                             disabled="#{dnsblMB.mode.read}"/>
+
+            <p:commandButton value="Cancelar"
+                             action="#{dnsblMB.cancelAction}"
+                             update="panel"
+                             disabled="#{dnsblMB.mode.read}"
+                             immediate="true">
+                    <p:resetInput target=":f"/>
+
+            </p:commandButton>
+
+            <!-- ======================== -->
+            <!-- Painél com os dados para edição.     -->
+            <!-- ======================== -->
+
+            <p:panel rendered="#{not empty dnsblMB.entity}"
+                     header="#{dnsblMB.mode.description}">
+
+                <!-- Use um panelGrid para organizar melhor! -->
+                <h:panelGrid columns="3">
+
+                    <!-- Veja que tem 3 elementos, cada um vai para uma coluna. -->
+                    <h:outputLabel value="URL:"/>
+                    <p:inputText id="uri" value="#{dnsblMB.entity.uri}" required="true"/>
+                    <p:message for="uri" />
+
+                </h:panelGrid>
+
+            </p:panel>
+
+        </p:outputPanel>
+
+
+    </h:form>
+
+</h:body>
+
+</html>

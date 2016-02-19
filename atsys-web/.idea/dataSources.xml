@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1912194198">
+    <data-source source="LOCAL" name="ATSys" uuid="4f0fa519-2bd1-4e8b-9f8d-ac71855c6b94">
+      <driver-ref>oracle</driver-ref>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@//192.168.5.31:1522/DEV</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="id" />
+        <cc:attribute name="label" required="true" />
+        <cc:attribute name="value" required="true" />
+        <cc:attribute name="required" default="false" />
+        <cc:attribute name="readonly" default="false" />
+        <cc:attribute name="render" default="true" />
+        <cc:attribute name="title" />
+        <cc:attribute name="layout" default="pageDirection" />
+        <cc:attribute name="converterId" required="false" />
+    </cc:interface>
+
+    <cc:implementation>
+
+        <h:panelGrid columns="1">
+
+            <p:message id="msg"
+                       showDetail="false"
+                       showSummary="true"
+                       for="#{cc.attrs.id}:#{cc.attrs.id}"
+                       rendered="#{cc.attrs.render and not cc.attrs.readonly}"
+                       />
+
+            <h:outputLabel id="label" styleClass="label"
+                           for="#{cc.attrs.id}:#{cc.attrs.id}"
+                           title="#{cc.attrs.title}"
+                           rendered="#{cc.attrs.render}"
+                           value="#{cc.attrs.label}: #{cc.attrs.required ? '*' : ''}"
+                           />
+
+            <h:selectOneRadio id="#{cc.attrs.id}"
+                              value="#{cc.attrs.value}"
+                              label="#{cc.attrs.label}"
+                              required="#{cc.attrs.required}"
+                              rendered="#{cc.attrs.render}"
+                              readonly="#{cc.attrs.readonly}"                              
+                              layout="#{cc.attrs.layout}"
+                              requiredMessage="'#{cc.attrs.label}' é obrigatório!"
+                              >
+                <f:converter converterId="#{cc.attrs.converterId}" />
+                <cc:insertChildren />
+            </h:selectOneRadio>
+
+        </h:panelGrid>
+        
+    </cc:implementation>
+
+</html>

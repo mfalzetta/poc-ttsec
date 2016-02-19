@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title"></ui:define>
+
+        <ui:define name="body">
+            <h3>Página inicial</h3>
+            <h:outputLink value="secured/ads.jsf">Programas</h:outputLink>
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>

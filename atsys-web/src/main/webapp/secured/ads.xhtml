@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://java.sun.com/jsf/composite/ezcomp">
+
+<f:view contracts="basic">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="title">Cadastro de Anúncios</ui:define>
+
+        <ui:define name="body">
+
+            <!--<p:sticky target="adTitle" margin="100"  />-->
+
+            <p>A tabela abaixo apresenta todos os seus anúncios cadastrados.</p>
+
+            <p:dataTable id="table" value="#{realStateMB.list}" var="u" paginator="true" styleClass="font-medium"
+                         selection="#{realStateMB.entity}" rowKey="#{u.id}" rows="10" selectionMode="single"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}  {RowsPerPageDropdown}"
+                         currentPageReportTemplate=""
+                         rowsPerPageTemplate="10,25,50,100">
+
+                <p:ajax event="rowSelect" listener="#{realStateMB.onSelect}" partialSubmit="true" update=":f:btn:crud :f:panel"/>
+
+                <p:column filterBy="#{u.title}" style="width: 30em">
+                    <f:facet name="header">Título</f:facet>
+                    <h:outputText value="#{u.title}"/>
+                </p:column>
+
+                <p:column filterBy="#{u.subtype.fullDescription}">
+                    <f:facet name="header">Tipo</f:facet>
+                    <h:outputText value="#{u.subtype.fullDescription}"/>
+                </p:column>
+
+                <p:column filterBy="#{u.price}" styleClass="ha-right">
+                    <f:facet name="header">Preço</f:facet>
+                    <h:outputText value="#{u.price}">
+                        <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column filterBy="#{u.priceType}">
+                    <f:facet name="header">Transação</f:facet>
+                    <h:outputText value="#{u.priceType.description}"/>
+                </p:column>
+
+                <p:column filterBy="#{u.opening}">
+                    <f:facet name="header">Início</f:facet>
+                    <h:outputText value="#{u.opening}" converter="localDateTime"/>
+                </p:column>
+
+                <p:column filterBy="#{u.closing}">
+                    <f:facet name="header">Término</f:facet>
+                    <h:outputText value="#{u.closing}" converter="localDateTime"/>
+                </p:column>
+
+            </p:dataTable>
+
+            <br/>
+
+            <a:crudButtons id="btn" crudAction="#{realStateMB}"
+                           updateOnCreate=":f:panel :f:table"
+                           updateOnSave=":f:g :f:panel :f:table"
+                           updateOnCancel=":f:g :f:panel :f:table"
+                           updateOnRemove=":f:g :f:panel :f:table"
+                           saveProcess=":f:panel"/>
+
+            <br/>
+
+            <p:outputPanel id="panel">
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('.digits').mask('000.000.000', {reverse: true});
+                    });
+                </script>
+
+                <p:panel rendered="#{not empty realStateMB.entity}">
+
+                    <p:focus for="title" rendered="#{realStateMB.mode.insert}"/>
+
+                    <h3>Dados do anúncio</h3>
+                    <hr/>
+
+                    <div class="form">
+
+                        <p:outputLabel value="Título do anúncio:">
+                            <p:inputText id="title" value="#{realStateMB.entity.title}" required="true"
+                                         size="80" maxlength="80"/>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Início:">
+                            <p:calendar value="#{realStateMB.entity.opening}" required="true" converter="localDateTime">
+                                <f:attribute name="pattern" value="dd/MM/yyyy"/>
+                            </p:calendar>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Término:">
+                            <p:calendar value="#{realStateMB.entity.closing}" required="true" converter="localDateTime">
+                                <f:attribute name="pattern" value="dd/MM/yyyy"/>
+                            </p:calendar>
+                        </p:outputLabel>
+
+
+                    </div>
+
+                    <br/>
+
+                    <h3>Dados do imóvel</h3>
+                    <hr/>
+
+                    <div class="form">
+
+                        <p:outputLabel value="Tipo imóvel:">
+                            <p:selectOneMenu value="#{realStateMB.entity.subtype}" converter="adSubtype">
+                                <f:selectItems value="#{appMB.adSubtypes}" var="st"
+                                               itemValue="#{st}" itemLabel="#{st.type.description} - #{st.description}"/>
+                            </p:selectOneMenu>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Responsável:">
+                            <p:autoComplete id="resp" value="#{realStateMB.entity.owner}" var="o" maxResults="20"
+                                            queryDelay="250" onclick="this.select()" placeholder="Nome do responsável"
+                                            converter="user" itemLabel="#{o.name}" itemValue="#{o}" required="true"
+                                            completeMethod="#{appMB.completeUsers}" forceSelection="true" size="40">
+                                <p:ajax event="itemSelect" partialSubmit="true" process="@this"/>
+                                <p:column>#{o.name}</p:column>
+                            </p:autoComplete>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Preço (R$)">
+                            <p:inputText value="#{realStateMB.entity.price}" styleClass="digits"
+                                         size="10" maxlength="10">
+                                <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                                <f:validateDoubleRange minimum="0"/>
+                            </p:inputText>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Transação">
+                            <p:selectOneMenu value="#{realStateMB.entity.priceType}" converter="priceType">
+                                <f:selectItems value="#{appMB.priceTypes}" var="p"
+                                               itemValue="#{p}" itemLabel="#{p.description}"/>
+                            </p:selectOneMenu>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Condomínio (R$)">
+                            <p:inputText value="#{realStateMB.entity.condoFee}" styleClass="digits"
+                                         size="10" maxlength="10">
+                                <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                                <f:validateDoubleRange minimum="0"/>
+                            </p:inputText>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="IPTU (R$)">
+                            <p:inputText value="#{realStateMB.entity.iptuFee}" styleClass="digits"
+                                         size="10" maxlength="10">
+                                <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                                <f:validateDoubleRange minimum="0"/>
+                            </p:inputText>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Área total (m&#178;)">
+                            <p:inputText value="#{realStateMB.entity.totalArea}" styleClass="digits"
+                                         size="10" maxlength="10">
+                                <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                                <f:validateLongRange minimum="0"/>
+                            </p:inputText>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Área útil (m&#178;)">
+                            <p:inputText value="#{realStateMB.entity.utilArea}" styleClass="digits"
+                                         size="10" maxlength="10">
+                                <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                                <f:validateLongRange minimum="0"/>
+                            </p:inputText>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Quartos:">
+                            <p:inputText value="#{realStateMB.entity.rooms}" styleClass="digits"
+                                         size="10" maxlength="10">
+                                <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                                <f:validateLongRange minimum="0"/>
+                            </p:inputText>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Suites:">
+                            <p:inputText value="#{realStateMB.entity.suites}" styleClass="digits"
+                                         size="10" maxlength="10">
+                                <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                                <f:validateLongRange minimum="0"/>
+                            </p:inputText>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Banheiros:">
+                            <p:inputText value="#{realStateMB.entity.bathrooms}" styleClass="digits"
+                                         size="10" maxlength="10">
+                                <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                                <f:validateLongRange minimum="0"/>
+                            </p:inputText>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Vagas:">
+                            <p:inputText value="#{realStateMB.entity.parkingSpaces}" styleClass="digits"
+                                         size="10" maxlength="10">
+                                <f:convertNumber groupingUsed="true" minFractionDigits="0" locale="pt_BR"/>
+                                <f:validateLongRange minimum="0"/>
+                            </p:inputText>
+                        </p:outputLabel>
+
+                        <br/>
+
+                        <!--<p:outputLabel value="Descrição Livre:">-->
+                        <!--<p:inputTextarea  rows="5" cols="100" autoResize="true" style="width: 100%"/>-->
+                        <!--</p:outputLabel>-->
+
+                    </div>
+
+                    <br/>
+
+                    <h3>Fotos do imóvel</h3>
+                    <hr/>
+
+                    <p:fileUpload fileUploadListener="#{realStateMB.handleFileUpload}" multiple="true"
+                                  mode="advanced" update="images"
+                                  auto="true" sizeLimit="20000000"
+                                  invalidFileMessage="Arquivo com formato inválido."
+                                  invalidSizeMessage="O arquivo é muito grande."
+                                  label="Adicionar novas fotos"/>
+
+
+                    <p:outputPanel id="images" style="margin-top: 20px">
+
+
+                        <!--<p:dataGrid value="#{realStateMB.photos}" var="m">-->
+                            <!--<h:panelGrid columns="1" cellpadding="10" style="float: left">-->
+                                <!--<p:lightBox>-->
+                                    <!--<h:outputLink value="#{request.contextPath}#{m.url}" title="#{m.name}">-->
+                                        <!--<div style="width: 250px; padding: 10px" class="sw">-->
+                                            <!--<p:graphicImage value="#{m.url}" width="250"/>-->
+                                        <!--</div>-->
+                                    <!--</h:outputLink>-->
+                                <!--</p:lightBox>-->
+                                <!--<p:inplace editor="true" emptyLabel="Descrição" >-->
+                                    <!--<p:inputText value="#{m.name}"  />-->
+                                <!--</p:inplace>-->
+                                <!--<p:commandLink value="Remover" actionListener="#{realStateMB.remove(m)}"-->
+                                               <!--process="@this" update=":f:g :f:images"/>-->
+                            <!--</h:panelGrid>-->
+                        <!--</p:dataGrid>-->
+
+                        <ui:repeat value="#{realStateMB.photos}" var="m">
+                            <h:panelGrid columns="1"  style="float: left; margin-right: 20px">
+                                <p:lightBox>
+                                    <h:outputLink value="#{request.contextPath}#{m.url}" title="#{m.name}">
+                                        <div style="width: 250px; padding: 10px" class="sw">
+                                            <p:graphicImage value="#{m.url}" width="250"/>
+                                        </div>
+                                    </h:outputLink>
+                                </p:lightBox>
+                                <p:inputText value="#{m.name}"  style="margin-top: 5px; width: 260px;" />
+                                <p:commandLink value="Remover" actionListener="#{realStateMB.remove(m)}"
+                                               process="@this" update=":f:g :f:images"/>
+                            </h:panelGrid>
+                        </ui:repeat>
+
+                        <div style="clear: both"></div>
+
+                        <!--<p:galleria value="#{realStateMB.photos}" var="m">-->
+                        <!--<p:graphicImage value="#{m.url}"/>-->
+                        <!--</p:galleria>-->
+
+                        <!--<p:contentFlow value="#{realStateMB.photos}" var="m" rendered="#{not empty realStateMB.photos}">-->
+                        <!--<p:graphicImage value="#{m.url}" width="200"/>-->
+                        <!--</p:contentFlow>-->
+
+                        <!--<p:imageSwitch effect="fade">-->
+                            <!--<ui:repeat value="#{realStateMB.photos}" var="m">-->
+                                <!--<p:graphicImage value="#{m.url}"/>-->
+                            <!--</ui:repeat>-->
+                        <!--</p:imageSwitch>-->
+
+                    </p:outputPanel>
+
+                </p:panel>
+
+            </p:outputPanel>
+
+        </ui:define>
+
+    </ui:composition>
+
+</f:view>
+
+</html>
+
+
